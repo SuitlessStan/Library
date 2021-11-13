@@ -2,37 +2,52 @@ import * as React from "react"
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
   theme,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  useDisclosure,
 } from "@chakra-ui/react"
+import {SearchIcon} from '@chakra-ui/icons';
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import TopBar from './main-components/top-bar';
+import RandomQuotes from "./main-components/random-quote";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
+    <Box bg="#FDFDFD" p="5" borderRadius="10" height="80vh" m="2" border="1px solid">
+      <TopBar />
+      <RandomQuotes />
     </Box>
   </ChakraProvider>
 )
+
+
+
+function Profile() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  return (
+    <>
+      <Button colorScheme="blue" onClick={onOpen}>
+          Open
+      </Button>
+      <Box p="5" borderRadius="10">
+        <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
+              <DrawerBody>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+      </Box>
+    </>
+  )
+}
