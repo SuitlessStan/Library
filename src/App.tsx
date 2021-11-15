@@ -3,51 +3,35 @@ import {
   ChakraProvider,
   Box,
   theme,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  useDisclosure,
+  Grid,
+  GridItem,
+  Text,
 } from "@chakra-ui/react"
-import {SearchIcon} from '@chakra-ui/icons';
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import TopBar from './main-components/top-bar';
-import RandomQuotes from "./main-components/random-quote";
+import RandomQuotes from "./main-components/features/random-quote";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box bg="#FDFDFD" p="5" borderRadius="10" height="80vh" m="2" border="1px solid">
+    <Box bg="#FDFDFD" p="5" borderRadius="10" height="80vh" border="1px solid">
       <TopBar />
-      <RandomQuotes />
+      <Box m="3">
+            <Grid h="300px" templateRows="repeat(3,1fr)" templateColumns="repeat(4,1fr)" borderRadius="md">
+                <GridItem rowSpan={3} colSpan={2} bg="orange.400">
+                    <Box p="3">
+                        <Text fontSize="3xl" color={"white"} fontFamily="Roboto">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam quo sapiente blanditiis placeat error animi consequatur eligendi eaque voluptatum soluta libero possimus cum labore, ut, adipisci voluptatem voluptas minima culpa.
+                        </Text>
+                    </Box>
+                </GridItem>
+                <GridItem rowSpan={3} colSpan={2}>
+                    <Box p="3" borderRadius="md" bg="blue.400">
+                        <RandomQuotes/>
+                    </Box>
+                </GridItem>
+            </Grid>
+       </Box>
     </Box>
   </ChakraProvider>
 )
 
 
-
-function Profile() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
-  return (
-    <>
-      <Button colorScheme="blue" onClick={onOpen}>
-          Open
-      </Button>
-      <Box p="5" borderRadius="10">
-        <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
-              <DrawerBody>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
-      </Box>
-    </>
-  )
-}
