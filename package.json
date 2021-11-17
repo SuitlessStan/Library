@@ -22,6 +22,7 @@
     "react-icons": "^3.11.0",
     "react-scripts": "4.0.3",
     "typescript": "^3.9.10",
+    "unsplash-js": "^7.0.15",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -44,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^3.0.3"
   }
 }

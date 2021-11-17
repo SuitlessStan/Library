@@ -1,8 +1,26 @@
 import * as React from 'react';
 import axios from 'axios';
-import {createClient} from 'pexels';
+import {Box,Image} from '@chakra-ui/react';
 
-const KEY = '563492ad6f91700001000001d1819d89e8bb428e969d1e5aafe6643b';
-const client = createClient(KEY);
+const URL:string = 'https://source.unsplash.com/random';
 
-client.photos.show({id:2014422}).then(photo => console.log(photo));
+
+interface RandomPictures {
+    src:string,
+}
+
+const randomPictures = (props:RandomPictures) => {
+    return (
+        <Box boxSize="md">
+            <Image src={props.src} alt="random picture" width={"100%"}/>
+        </Box>
+    );
+}
+
+function RandomPicture() {
+    return (
+        randomPictures({src:URL})
+    );
+}
+
+export default RandomPicture;

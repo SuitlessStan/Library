@@ -1,23 +1,28 @@
-import {Flex,Text,Spacer,InputGroup,Input,Stack,InputLeftElement} from '@chakra-ui/react';
+import {Flex,Text,Spacer,InputGroup,Input,Stack,InputLeftElement,Box} from '@chakra-ui/react';
 import {SearchIcon} from '@chakra-ui/icons';
 
 
 function TopBar() {
     return (
         <Flex>
-        <Text
-            fontSize="3xl"
-            color="dark"
-            fontWeight="bold"
-        >   Hello, Issam</Text>
+        <Box p="2" bg="#1A1A23" borderRadius="md">
+            <Text
+                fontSize="3xl"
+                color="white"
+                fontWeight="bold"
+                textAlign="center"
+            >   Hello, Issam</Text>
+        </Box>
         <Spacer />
         <Stack>
-            <InputGroup>
-            <InputLeftElement
-                pointerEvents="none"
-                children={<SearchIcon color="gray.300" />} />
-            <Input type="text" placeholder="Search for a book..." width="100%" />
-            </InputGroup>
+            <Box p="3" bg="#1A1A23" borderRadius="md">
+                <InputGroup>
+                <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="gray.300" />} />
+                <Input type="text" placeholder="Search for a book..." width="100%" color="white" />
+                </InputGroup>
+            </Box>
         </Stack>
         </Flex>
     );
