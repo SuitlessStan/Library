@@ -65,18 +65,21 @@ const PhotoComp = (photo: Photo) => {
 }
 
 
-let randomPictures: Random[] = [];
+let randomPictures: any = [];
 
-const Flow = () => {
-  const [images, setImage]: [Random[], (images: Random[]) => void] = React.useState(randomPictures);
+const Body = () => {
+  const [images, setImage]  = React.useState(randomPictures);
   const [error, setError]: [string, (error: string) => void] = React.useState("");
 
   React.useEffect(
     () => {
       api.photos.getRandom({ count: 10 })
         .then(result => {
-          console.log(result.response);
-          setImage(result.response);
+          setImage(
+            // Array.isArray(result.response) ? result.response : [result.response]
+            result.response
+          );
+          console.log(images);
         })
         .catch(() => {
           const errorMessage = 'Something has gone wrong';
@@ -90,7 +93,9 @@ const Flow = () => {
     <Box>
       <Center>
         {images.map((photo: Random) => {
-          <Image borderRadius="md" />
+          return (
+            <Image borderRadius="md" src={photo.urls.regular} />
+          );
         })}
       </Center>
     </Box>
