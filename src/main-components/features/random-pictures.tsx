@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Image,CircularProgress, Code, Link } from '@chakra-ui/react';
+import { Box, Image, CircularProgress, Code, Link, Center } from '@chakra-ui/react';
 import { createApi } from "unsplash-js";
 import { Random } from 'unsplash-js/dist/methods/photos/types';
 
@@ -17,19 +17,47 @@ type Photo = {
   };
 };
 
+type RandomResponse = {
+  id: string | number,
+  width: number,
+  height: number,
+  color: string | null,
+  urls: {
+    raw: string,
+    full: string,
+    regular: string,
+    small: string,
+    thumb: string
+  },
+  links: {
+    self: string,
+    html: string,
+    download: string,
+    download_location: string
+  },
+  user: {
+    id: string,
+    username: string,
+    name: string,
+  },
+  location: {
+    title:string,
+  }
+}
+
 const api = createApi({
   accessKey: "ydQzHFVBUsrPJEG7fZohNC7_NIN2pwYS_ql6RnsRd7c"
 });
 
 
-const PhotoComp = (photo:Photo) => {
-  const {urls,width,height,id,user} = photo;
+const PhotoComp = (photo: Photo) => {
+  const { urls, width, height, id, user } = photo;
   return (
     <Box>
       <Image src={urls.regular} alt={id.toString()} />
       <Code textAlign="center">
         Photograph by <Link href={`https://unsplash.com/@${user.username}`} isExternal>
-        `${user.username}`
+          `${user.username}`
         </Link>
       </Code>
     </Box>
@@ -37,30 +65,34 @@ const PhotoComp = (photo:Photo) => {
 }
 
 
-var randomPicture : Random[] = [];
+let randomPictures: Random[] = [];
 
-const Body = () => {
-  const [image,setImage] : [Random[],(image:Random[]) => void] = React.useState(randomPicture);
-  const [error,setError] : [string,(error:string) => void] = React.useState("");
+const Flow = () => {
+  const [images, setImage]: [Random[], (images: Random[]) => void] = React.useState(randomPictures);
+  const [error, setError]: [string, (error: string) => void] = React.useState("");
 
   React.useEffect(
     () => {
-      api.photos.getRandom({count:10})
-      .then(result => {
-        // setImage(result.response)
-        console.log(result.response);
-      })
-      .catch(() => {
-        const errorMessage = 'Something has gone wrong';
-        setError(errorMessage);
-        console.log(error);
-      })
-    },[]
+      api.photos.getRandom({ count: 10 })
+        .then(result => {
+          console.log(result.response);
+          setImage(result.response);
+        })
+        .catch(() => {
+          const errorMessage = 'Something has gone wrong';
+          setError(errorMessage);
+          console.log(error);
+        })
+    }, []
   )
 
   return (
     <Box>
-
+      <Center>
+        {images.map((photo: Random) => {
+          <Image borderRadius="md" />
+        })}
+      </Center>
     </Box>
   );
 }

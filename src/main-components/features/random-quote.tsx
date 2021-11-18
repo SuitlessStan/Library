@@ -1,4 +1,4 @@
-import {Box, Button, Text} from '@chakra-ui/react';
+import {Box, Button, Center, Code, Text} from '@chakra-ui/react';
 import React from 'react';
 import axios from 'axios';
 
@@ -45,12 +45,15 @@ function RandomQuotes(){
 
     return (
       <Box>
-          <Text fontSize="2xl" color="whiteAlpha">
-          {quote.content}
-          </Text>
-          <Button variant="solid" onClick={update}>
-              Generate
-          </Button>
+          <Center>
+            <Text fontSize="2xl" color="whiteAlpha">
+            {quote.content}
+            <Code>{quote.author}</Code>
+            </Text>
+            <Button variant="solid" onClick={update}>
+                Generate
+            </Button>
+          </Center>
       </Box>
     );
 }
