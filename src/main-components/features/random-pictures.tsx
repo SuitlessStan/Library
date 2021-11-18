@@ -1,5 +1,4 @@
 import * as React from 'react';
-import axios from 'axios';
 import { Box, Image,CircularProgress, Code, Link } from '@chakra-ui/react';
 import { createApi } from "unsplash-js";
 import { Random } from 'unsplash-js/dist/methods/photos/types';
@@ -38,21 +37,26 @@ const PhotoComp = (photo:Photo) => {
 }
 
 
-var randomPicture : Random;
+var randomPicture : Random[] = [];
 
 const Body = () => {
-  const [image,setImage] : [any,(image:any) => void] = React.useState(randomPicture);
+  const [image,setImage] : [Random[],(image:Random[]) => void] = React.useState(randomPicture);
   const [error,setError] : [string,(error:string) => void] = React.useState("");
 
   React.useEffect(
     () => {
-      api.photos.getRandom({query:"nature"})
+      api.photos.getRandom({count:10})
       .then(result => {
-        setImage(result.response)
-        console.log(result.response,image);
+        // setImage(result.response)
+        console.log(result.response);
       })
-    }
-  );
+      .catch(() => {
+        const errorMessage = 'Something has gone wrong';
+        setError(errorMessage);
+        console.log(error);
+      })
+    },[]
+  )
 
   return (
     <Box>
