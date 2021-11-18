@@ -2,6 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { Box, Image,CircularProgress, Code, Link } from '@chakra-ui/react';
 import { createApi } from "unsplash-js";
+import { Random } from 'unsplash-js/dist/methods/photos/types';
 
 const URL: string = 'https://source.unsplash.com/random';
 
@@ -36,3 +37,28 @@ const PhotoComp = (photo:Photo) => {
   );
 }
 
+
+var randomPicture : Random;
+
+const Body = () => {
+  const [image,setImage] : [any,(image:any) => void] = React.useState(randomPicture);
+  const [error,setError] : [string,(error:string) => void] = React.useState("");
+
+  React.useEffect(
+    () => {
+      api.photos.getRandom({query:"nature"})
+      .then(result => {
+        setImage(result.response)
+        console.log(result.response,image);
+      })
+    }
+  );
+
+  return (
+    <Box>
+
+    </Box>
+  );
+}
+
+export default Body;
