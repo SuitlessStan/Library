@@ -18,10 +18,10 @@ export const App = () => (
       <TopBar />
       <Box marginTop="5">
             <Grid templateRows="repeat(3,1fr)" templateColumns="repeat(4,1fr)" borderRadius="md">
-                <GridItem rowSpan={2} colSpan={4}>
+                <GridItem rowSpan={3} colSpan={4}>
                   <Body/>
                 </GridItem>
-                <GridItem rowSpan={1} colSpan={4}>
+                <GridItem rowSpan={3} colSpan={4}>
                   <RandomQuotes/>
                 </GridItem>
             </Grid>

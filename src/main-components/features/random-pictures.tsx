@@ -79,7 +79,6 @@ const Body = () => {
             // Array.isArray(result.response) ? result.response : [result.response]
             result.response
           );
-          console.log(images);
         })
         .catch(() => {
           const errorMessage = 'Something has gone wrong';
@@ -92,11 +91,15 @@ const Body = () => {
   return (
     <Box>
       <Center>
+        <Box sx={{height:500,width:"70vw",overflow:"scroll", scrollbarWidth:0,scrollBehavior:"auto"}} borderRadius="lg">
         {images.map((photo: Random) => {
           return (
-            <Image borderRadius="md" src={photo.urls.regular} />
+            <Center>
+              <Image borderRadius="md" key={photo.id} src={photo.urls.regular} />
+            </Center>
           );
         })}
+        </Box>
       </Center>
     </Box>
   );

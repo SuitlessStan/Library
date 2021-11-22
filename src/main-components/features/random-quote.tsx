@@ -19,40 +19,31 @@ const URL : string = 'https://api.quotable.io/random';
 
 
 function RandomQuotes(){
-
     const [quote,setQuote] : [Quote, (quote:Quote) => void] = React.useState(defaultRandomQuote);
-    const [loading,setLoading] : [boolean, (loading:boolean) => void] = React.useState<boolean>(true);
-    const [error,setError] : [string, (error:string) => void] = React.useState("");
 
-   
-    
     const update = () => {
         axios.get<Quote>(URL)
         .then(response => {
            setQuote(response.data);
-           setLoading(false);
         })
         .catch(ex => {
             if (ex.response.status === 404){
                 const errorMessage = 'Something has gone wrong!';
-                setError(errorMessage);
-                setLoading(false);
-                console.log(error);
+                console.log(errorMessage);
             }
         })
     };
     React.useEffect(update,[]);
 
     return (
-      <Box>
+      <Box mt={5}>
           <Center>
-            <Text fontSize="2xl" color="whiteAlpha">
+            <Text fontSize="3xl" color="white">
             {quote.content}
-            <Code>{quote.author}</Code>
             </Text>
-            <Button variant="solid" onClick={update}>
-                Generate
-            </Button>
+          </Center>
+          <Center>
+            <Code mt={4}>{quote.author}</Code>
           </Center>
       </Box>
     );
