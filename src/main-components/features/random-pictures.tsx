@@ -94,8 +94,8 @@ const Body = () => {
         <Box sx={{height:500,width:"70vw",overflow:"scroll", scrollbarWidth:0,scrollBehavior:"auto"}} borderRadius="lg">
         {images.map((photo: Random) => {
           return (
-            <Center>
-              <Image borderRadius="md" key={photo.id} src={photo.urls.regular} />
+            <Center key={photo.id}>
+              <Image borderRadius="md" src={photo.urls.regular} />
             </Center>
           );
         })}
