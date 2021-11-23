@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { Box, Image, CircularProgress, Code, Link, Center } from '@chakra-ui/react';
+import Carousel from 'react-bootstrap/Carousel';
+import CarouselItem from 'react-bootstrap/CarouselItem';
+import Card from 'react-bootstrap/Card';
 import { createApi } from "unsplash-js";
 import { Random } from 'unsplash-js/dist/methods/photos/types';
 
@@ -17,33 +20,6 @@ type Photo = {
   };
 };
 
-type RandomResponse = {
-  id: string | number,
-  width: number,
-  height: number,
-  color: string | null,
-  urls: {
-    raw: string,
-    full: string,
-    regular: string,
-    small: string,
-    thumb: string
-  },
-  links: {
-    self: string,
-    html: string,
-    download: string,
-    download_location: string
-  },
-  user: {
-    id: string,
-    username: string,
-    name: string,
-  },
-  location: {
-    title:string,
-  }
-}
 
 const api = createApi({
   accessKey: "ydQzHFVBUsrPJEG7fZohNC7_NIN2pwYS_ql6RnsRd7c"
@@ -73,7 +49,7 @@ const Body = () => {
 
   React.useEffect(
     () => {
-      api.photos.getRandom({ count: 10 })
+      api.photos.getRandom({ count: 3, })
         .then(result => {
           setImage(
             // Array.isArray(result.response) ? result.response : [result.response]
@@ -91,15 +67,22 @@ const Body = () => {
   return (
     <Box>
       <Center>
-        <Box sx={{height:500,width:"70vw",overflow:"scroll", scrollbarWidth:0,scrollBehavior:"auto"}} borderRadius="lg">
-        {images.map((photo: Random) => {
-          return (
-            <Center key={photo.id}>
-              <Image borderRadius="md" src={photo.urls.regular} />
-            </Center>
-          );
-        })}
-        </Box>
+        <Carousel variant="dark">
+          {images.map((image:Photo) => {
+            return (
+              <Carousel.Item key={image.id}>
+                <Card>
+                  <Image src={image.urls.regular} alt={"Photograph by " + image.user.name} borderRadius="md"/>
+                  <Carousel.Caption>
+                    <Center>
+                      <Code m="4">{image.user.username}</Code>
+                    </Center>
+                  </Carousel.Caption>
+                </Card>
+              </Carousel.Item>
+            );
+          })}
+        </Carousel>
       </Center>
     </Box>
   );
