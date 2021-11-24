@@ -1,5 +1,8 @@
 import {Flex,Text,Spacer,InputGroup,Input,Stack,InputLeftElement,Box} from '@chakra-ui/react';
 import {SearchIcon} from '@chakra-ui/icons';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+
 
 
 function TopBar() {
@@ -27,5 +30,7 @@ function TopBar() {
         </Flex>
     );
 }
+
+
 
 export default TopBar;
