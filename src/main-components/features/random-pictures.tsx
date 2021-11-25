@@ -5,7 +5,7 @@ import CarouselItem from 'react-bootstrap/CarouselItem';
 import Card from 'react-bootstrap/Card';
 import { createApi } from "unsplash-js";
 import { Random } from 'unsplash-js/dist/methods/photos/types';
-import CarouselDisplay from './Carousel';
+import CaptionCarousel from './Carousel';
 
 const URL: string = 'https://source.unsplash.com/random';
 
@@ -67,7 +67,7 @@ const Body = () => {
   return (
     <Box>
       <Center>
-        <CarouselDisplay/>
+      <CaptionCarousel />
       </Center>
     </Box>
   );

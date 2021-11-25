@@ -25,6 +25,7 @@
     "react-multi-carousel": "^2.6.5",
     "react-responsive-carousel": "^3.2.22",
     "react-scripts": "4.0.3",
+    "react-slick": "^0.28.1",
     "typescript": "^3.9.10",
     "unsplash-js": "^7.0.15",
     "web-vitals": "^0.2.4"
@@ -51,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node-fetch": "^3.0.3"
+    "@types/node-fetch": "^3.0.3",
+    "@types/react-slick": "^0.23.7"
   }
 }
