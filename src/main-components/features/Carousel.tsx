@@ -12,6 +12,27 @@ import {
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 // And react-slick as our Carousel Lib
 import Slider from 'react-slick';
+import { createApi } from 'unsplash-js';
+import { Photos } from 'unsplash-js/dist/methods/search/types/response';
+
+const URL: string = 'https://source.unsplash.com/random';
+
+const api = createApi({
+  accessKey: "ydQzHFVBUsrPJEG7fZohNC7_NIN2pwYS_ql6RnsRd7c"
+});
+
+type Photo = {
+  id: number;
+  width: number;
+  height: number;
+  urls: { large: string; regular: string; raw: string; small: string };
+  color: string | null;
+  user: {
+    username: string;
+    name: string;
+  };
+};
+
 
 // Settings for the slider
 const settings = {
@@ -26,41 +47,38 @@ const settings = {
   slidesToScroll: 1,
 };
 
+let randomPictures: any = [];
+
+
 export default function CaptionCarousel() {
   // As we have used custom buttons, we need a reference variable to
   // change the state
   const [slider, setSlider] = React.useState<Slider | null>(null);
 
+  const [images, setImage]  = React.useState(randomPictures);
+  const [error, setError]: [string, (error: string) => void] = React.useState("");
+
+  React.useEffect(
+    () => {
+      api.photos.getRandom({ count: 10 })
+        .then(result => {
+          setImage(
+            // Array.isArray(result.response) ? result.response : [result.response]
+            result.response
+          );
+        })
+        .catch(() => {
+          const errorMessage = 'Something has gone wrong';
+          setError(errorMessage);
+          console.log(error);
+        })
+    }, []
+  )
+
   // These are the breakpoints which changes the position of the
   // buttons as the screen size changes
   const top = useBreakpointValue({ base: '90%', md: '50%' });
   const side = useBreakpointValue({ base: '30%', md: '40px' });
-
-  // This list contains all the data for carousels
-  // This can be static or loaded from a server
-  const cards = [
-    {
-      title: 'Design Projects 1',
-      text:
-        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
-      image:
-        'https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    },
-    {
-      title: 'Design Projects 2',
-      text:
-        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
-      image:
-        'https://images.unsplash.com/photo-1438183972690-6d4658e3290e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2274&q=80',
-    },
-    {
-      title: 'Design Projects 3',
-      text:
-        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
-      image:
-        'https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    },
-  ];
 
   return (
     <Box
@@ -107,7 +125,7 @@ export default function CaptionCarousel() {
       </IconButton>
       {/* Slider */}
       <Slider {...settings} ref={(slider: any) => setSlider(slider)}>
-        {cards.map((card, index) => (
+        {images.map((card:Photo, index: React.Key | null | undefined) => (
           <Box
             key={index}
             height={'2xl'}
@@ -115,7 +133,7 @@ export default function CaptionCarousel() {
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
-            backgroundImage={`url(${card.image})`}>
+            backgroundImage={`url(${card.urls.regular})`}>
             {/* This is the block you need to change, to customize the caption */}
             <Container size="container.lg" height="600px" position="relative">
               <Stack
@@ -126,10 +144,10 @@ export default function CaptionCarousel() {
                 top="50%"
                 transform="translate(0, -50%)">
                 <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
-                  {card.title}
+                  {card.user.username}
                 </Heading>
                 <Text fontSize={{ base: 'md', lg: 'lg' }} color="GrayText">
-                  {card.text}
+                  {card.user.name}
                 </Text>
               </Stack>
             </Container>

@@ -6,21 +6,23 @@ import {
   Grid,
   GridItem,
   Text,
+  Center,
 } from "@chakra-ui/react"
 import TopBar from './main-components/top-bar';
 import RandomQuotes from "./main-components/features/random-quote";
-import RandomPicture from "./main-components/features/random-pictures";
-import Body from "./main-components/features/random-pictures";
 import Nav from './main-components/top-bar';
+import CaptionCarousel from "./main-components/features/Carousel";
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box bg="#4a5bf0" p="5">
+  <ChakraProvider theme={theme} cssVarsRoot={undefined}>
+    <Box>
       <Nav />
-      <Box marginTop="5">
+      <Box marginTop="10">
             <Grid templateRows="repeat(3,1fr)" templateColumns="repeat(4,1fr)" borderRadius="md">
                 <GridItem rowSpan={3} colSpan={4}>
-                  <Body/>
+                  <Center>
+                    <CaptionCarousel/>
+                  </Center>
                 </GridItem>
                 <GridItem rowSpan={3} colSpan={4}>
                   <RandomQuotes/>
