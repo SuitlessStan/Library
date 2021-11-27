@@ -13,7 +13,6 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 // And react-slick as our Carousel Lib
 import Slider from 'react-slick';
 import { createApi } from 'unsplash-js';
-import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 
 const URL: string = 'https://source.unsplash.com/random';
 
@@ -31,6 +30,12 @@ type Photo = {
     username: string;
     name: string;
   };
+  location: {
+    title:string,
+    name:string,
+    city:string,
+    country:string,
+  }
 };
 
 
@@ -144,10 +149,10 @@ export default function CaptionCarousel() {
                 top="50%"
                 transform="translate(0, -50%)">
                 <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
-                  {card.user.username}
+                  @{card.user.username}
                 </Heading>
-                <Text fontSize={{ base: 'md', lg: 'lg' }} color="GrayText">
-                  {card.user.name}
+                <Text fontSize={{ base: 'lg', lg: 'lg' }}>
+                {card.location.country && card.location.city ? card.location.country + ' , ' + card.location.city : ' '}
                 </Text>
               </Stack>
             </Container>

@@ -36,8 +36,8 @@ function RandomQuotes(){
     React.useEffect(update,[]);
 
     return (
-        <Container maxW="xl" centerContent mt={6}>
-            <Box padding="4" maxW="3xl" textAlign="center" borderRadius="md" bg="blue.400">
+        <Container maxW="xl" centerContent mt={5}>
+            <Box padding="4" maxW="3xl" textAlign="center" borderRadius="md">
                 <Text fontSize="3xl" color="dark" fontStyle="italic">
                     {quote.content}
                 </Text>
