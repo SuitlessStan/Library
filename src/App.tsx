@@ -17,7 +17,7 @@ export const App = () => (
   <ChakraProvider theme={theme} cssVarsRoot={undefined}>
     <Box>
       <Nav />
-      <Box marginTop="10">
+      <Box marginTop="5">
             <Grid templateRows="repeat(3,1fr)" templateColumns="repeat(4,1fr)" borderRadius="md">
                 <GridItem rowSpan={3} colSpan={4}>
                   <Center>
@@ -28,7 +28,10 @@ export const App = () => (
                   <RandomQuotes/>
                 </GridItem>
             </Grid>
-       </Box>
+      </Box>
+      <Box>
+        
+      </Box>
     </Box>
   </ChakraProvider>
 )

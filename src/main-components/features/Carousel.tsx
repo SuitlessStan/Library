@@ -8,9 +8,7 @@ import {
   Text,
   Container,
 } from '@chakra-ui/react';
-// Here we have used react-icons package for the icons
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
-// And react-slick as our Carousel Lib
 import Slider from 'react-slick';
 import { createApi } from 'unsplash-js';
 
@@ -39,26 +37,11 @@ type Photo = {
 };
 
 
-// Settings for the slider
-const settings = {
-  dots: true,   
-  arrows: false,
-  fade: true,
-  infinite: true,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 5000,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
 
 let randomPictures: any = [];
 
 
 export default function CaptionCarousel() {
-  // As we have used custom buttons, we need a reference variable to
-  // change the state
-  const [slider, setSlider] = React.useState<Slider | null>(null);
 
   const [images, setImage]  = React.useState(randomPictures);
   const [error, setError]: [string, (error: string) => void] = React.useState("");
@@ -67,10 +50,7 @@ export default function CaptionCarousel() {
     () => {
       api.photos.getRandom({ count: 10 })
         .then(result => {
-          setImage(
-            // Array.isArray(result.response) ? result.response : [result.response]
-            result.response
-          );
+          setImage(result.response);
         })
         .catch(() => {
           const errorMessage = 'Something has gone wrong';
@@ -78,7 +58,24 @@ export default function CaptionCarousel() {
           console.log(error);
         })
     }, []
-  )
+  );
+
+
+  const [slider, setSlider] = React.useState<Slider | null>(null);
+
+
+  // Settings for the slider
+  const settings = {
+    dots: true,   
+    arrows: false,
+    fade: true,
+    infinite: true,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   // These are the breakpoints which changes the position of the
   // buttons as the screen size changes
@@ -89,7 +86,7 @@ export default function CaptionCarousel() {
     <Box
     borderRadius="md"
       position={'relative'}
-      height={'600px'}
+      height={'650px'}
       width={'90vw'}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
@@ -132,7 +129,7 @@ export default function CaptionCarousel() {
       <Slider {...settings} ref={(slider: any) => setSlider(slider)}>
         {images.map((card:Photo, index: React.Key | null | undefined) => (
           <Box
-            key={index}
+            key={card.id}
             height={'2xl'}
             position="relative"
             backgroundPosition="center"
@@ -146,10 +143,10 @@ export default function CaptionCarousel() {
                 w={'full'}
                 maxW={'lg'}
                 position="absolute"
-                top="50%"
+                top="30%"
                 transform="translate(0, -50%)">
-                <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
-                  @{card.user.username}
+                <Heading fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}>
+                  {card.location.title}
                 </Heading>
                 <Text fontSize={{ base: 'lg', lg: 'lg' }}>
                 {card.location.country && card.location.city ? card.location.country + ' , ' + card.location.city : ' '}

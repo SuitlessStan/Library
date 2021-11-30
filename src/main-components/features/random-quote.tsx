@@ -16,8 +16,6 @@ const defaultRandomQuote : any = [];
 const URL : string = 'https://api.quotable.io/random';
 
 
-
-
 function RandomQuotes(){
     const [quote,setQuote] : [Quote, (quote:Quote) => void] = React.useState(defaultRandomQuote);
 
@@ -36,17 +34,16 @@ function RandomQuotes(){
     React.useEffect(update,[]);
 
     return (
-        <Container maxW="xl" centerContent mt={5}>
-            <Box padding="4" maxW="3xl" textAlign="center" borderRadius="md">
+        <Box padding="2" textAlign="center" borderRadius="md">
                 <Text fontSize="3xl" color="dark" fontStyle="italic">
                     {quote.content}
+                    <Code m={2} colorScheme="dark">{" - " + quote.author}</Code>
                 </Text>
-                <Code m={4} colorScheme="dark">{" - " + quote.author}</Code>
-                <Button m={3} variant="solid" colorScheme="facebook" onClick={update}>
-                    More!
+                
+                <Button m={1} variant="solid" colorScheme="facebook" onClick={update}>
+                    I'm feeling lucky!
                 </Button>
-            </Box>
-        </Container>
+        </Box>
     );
 }
 
