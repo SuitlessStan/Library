@@ -5,19 +5,18 @@ import {
   theme,
   Grid,
   GridItem,
-  Text,
   Center,
 } from "@chakra-ui/react"
-import TopBar from './main-components/top-bar';
 import RandomQuotes from "./main-components/features/random-quote";
 import Nav from './main-components/top-bar';
 import CaptionCarousel from "./main-components/features/Carousel";
+import Library from "./main-components/library";
 
 export const App = () => (
   <ChakraProvider theme={theme} cssVarsRoot={undefined}>
     <Box>
       <Nav />
-      <Box marginTop="5">
+      <Box>
             <Grid templateRows="repeat(3,1fr)" templateColumns="repeat(4,1fr)" borderRadius="md">
                 <GridItem rowSpan={3} colSpan={4}>
                   <Center>
@@ -30,7 +29,7 @@ export const App = () => (
             </Grid>
       </Box>
       <Box>
-        
+          <Library/>
       </Box>
     </Box>
   </ChakraProvider>

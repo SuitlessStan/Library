@@ -12,7 +12,7 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Slider from 'react-slick';
 import { createApi } from 'unsplash-js';
 
-const URL: string = 'https://source.unsplash.com/random';
+// const URL: string = 'https://source.unsplash.com/random';
 
 const api = createApi({
   accessKey: "ydQzHFVBUsrPJEG7fZohNC7_NIN2pwYS_ql6RnsRd7c"
