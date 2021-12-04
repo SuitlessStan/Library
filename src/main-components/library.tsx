@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ProductSimple from './test';
-import {Grid} from '@chakra-ui/react';
+import {Box, Grid} from '@chakra-ui/react';
 import AddNewBook from './add-new-book';
 
 
@@ -20,12 +20,14 @@ function Library() {
 
     return (
         <>
-            <Grid templateColumns="repeat(3,1fr)" rowSpan="repeat(2,1fr)" borderRadius="md">
-                <AddNewBook/>
-                <ProductSimple/>
-                <ProductSimple/>
-                <ProductSimple/>
-            </Grid>
+            <Box p={10} m={5} bg={"grey"} borderRadius="15">
+                <Grid templateColumns="repeat(3,1fr)" rowSpan="repeat(2,1fr)" borderRadius="md">
+                    <AddNewBook/>
+                    <ProductSimple/>
+                    <ProductSimple/>
+                    <ProductSimple/>
+                </Grid>
+            </Box>
         </>
     );
 }

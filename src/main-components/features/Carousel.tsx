@@ -87,7 +87,7 @@ export default function CaptionCarousel() {
     borderRadius="md"
       position={'relative'}
       height={'650px'}
-      width={'90vw'}
+      width={'75vw'}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
       <link
