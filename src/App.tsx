@@ -16,7 +16,7 @@ export const App = () => (
   <ChakraProvider theme={theme} cssVarsRoot={undefined}>
     <Box>
       <Nav />
-      <Box>
+      <Box marginTop={12}>
             <Grid templateRows="repeat(3,1fr)" templateColumns="repeat(4,1fr)" borderRadius="md">
                 <GridItem rowSpan={3} colSpan={4}>
                   <Center>

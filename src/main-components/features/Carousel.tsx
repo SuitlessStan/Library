@@ -52,9 +52,8 @@ export default function CaptionCarousel() {
         .then(result => {
           setImage(result.response);
         })
-        .catch(() => {
-          const errorMessage = 'Something has gone wrong';
-          setError(errorMessage);
+        .catch((ex) => {
+          setError(ex);
           console.log(error);
         })
     }, []
