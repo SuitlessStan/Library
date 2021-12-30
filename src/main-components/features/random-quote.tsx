@@ -17,7 +17,7 @@ const URL : string = 'https://api.quotable.io/random';
 
 
 function RandomQuotes(){
-    const [quote,setQuote] : [Quote, (quote:Quote) => void] = React.useState(defaultRandomQuote);
+    const [quote,setQuote] = React.useState(defaultRandomQuote);
 
     const update = () => {
         axios.get<Quote>(URL)
@@ -36,7 +36,7 @@ function RandomQuotes(){
     return (
     <Container centerContent>
         <Box padding="3" textAlign="center" w={"75vw"} height={185}>
-            <Text fontSize="2xl" color="dark" fontStyle="italic">
+            <Text fontSize="4xl" color="dark" fontStyle="italic">
                     {quote.content}
             </Text>
             <Badge>{" - " + quote.author}</Badge>
