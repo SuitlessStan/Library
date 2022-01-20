@@ -36,18 +36,8 @@ import AddBookAuthor from "./adding-book-modal.tsx/book-author";
 import AddBookGenre from "./adding-book-modal.tsx/book-genre";
 import AddBookReview from "./adding-book-modal.tsx/book-review";
 import AddBookTitle from "./adding-book-modal.tsx/book-title";
-
-interface Book {
-  title: string;
-  author: string;
-  pages_count: number | null;
-  current_page: number | null;
-  readingStatus?: (current: number, pagesCount: number) => number;
-  genre: string;
-  review: string;
-}
-
-let addedBook: Book[] = [];
+import Book from "./interfaces/book";
+import AddNumberOfPages from "./adding-book-modal.tsx/book-pages";
 
 export default function AddNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -82,7 +72,13 @@ function AddNewBookModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const [book, setBooks] = React.useState(Object);
+  const [book, setBooks] = React.useState<Book>({
+    title: "",
+    author: "",
+    genre: "",
+    review: "",
+  });
+
 
   const updateChange = (e: any) => {
     const { value, name } = e.target;
@@ -112,25 +108,9 @@ function AddNewBookModal({
               bookAuthor={book.author}
               onChange={(e) => updateChange(e)}
             />
-            <FormControl id="pages_count">
-              <FormLabel>Number of Pages</FormLabel>
-              <NumberInput
-                defaultValue={40}
-                min={40}
-                max={1200}
-                value={book.current_page}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <FormHelperText>The number of pages in the book</FormHelperText>
-            </FormControl>
             <ReadingStatus />
             <AddBookGenre
-              bookGenre={book.Genre}
+              bookGenre={book.genre}
               onChange={(e) => updateChange(e)}
             />
             <AddBookReview
@@ -148,10 +128,6 @@ function AddNewBookModal({
     </Modal>
   );
 }
-
-
-
-
 
 function ReadingStatus() {
   const [value, setValue]: [string, (value: string) => void] =
