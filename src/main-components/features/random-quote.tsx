@@ -1,4 +1,4 @@
-import {Badge, Box, Button, Code,  Container,  Text} from '@chakra-ui/react';
+import {Badge, Box, Button, Code,  Container,  Text, VStack} from '@chakra-ui/react';
 import React from 'react';
 import axios from 'axios';
 
@@ -34,18 +34,18 @@ function RandomQuotes(){
     React.useEffect(update,[]);
 
     return (
-    <Container centerContent>
-        <Box padding="3" textAlign="center" w={"75vw"} height={185}>
-            <Text fontSize="4xl" color="dark" fontStyle="italic">
-                    {quote.content}
+    <VStack>
+         <Box p={3}>
+            <Text fontSize="3xl" color="dark" fontStyle="italic" textAlign={"center"}>
+                {quote.content}
             </Text>
-            <Badge>{" - " + quote.author}</Badge>
-            <br/>
-            <Button m={4} variant="ghost" onClick={update}>
-                Next
-            </Button>
-        </Box>
-    </Container>
+         </Box>
+        <Badge>{" - " + quote.author}</Badge>
+        <br/>
+        <Button m={4} variant="ghost" onClick={update}>
+            Next
+        </Button>
+    </VStack>
     );
 }
 

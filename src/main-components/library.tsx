@@ -7,12 +7,9 @@ import AddNewBook from './add-new-book';
 type Book = {
     title: string,
     author: string,
-    pages_count: number,
     book_cover: string,
     read: boolean,
     review?:string,
-    isRead():boolean,
-    updateReview():void,
 }
 
 const defaultBooks: Book[] = [];
@@ -23,7 +20,7 @@ function Library() {
 
     return (
         <>
-            <Box p={15} mt={10} borderRadius="15">
+            <Box p={15} mt={20} borderRadius="15">
                 <SimpleGrid columns={{
                     sm:1,
                     md:2,
