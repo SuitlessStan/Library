@@ -1,22 +1,11 @@
 import * as React from 'react';
-import BookSample from './test';
-import {Box, Grid,SimpleGrid} from '@chakra-ui/react';
+import BookSample from './BookTemplate';
+import {Box,SimpleGrid} from '@chakra-ui/react';
 import AddNewBook from './add-new-book';
 
 
-type Book = {
-    title: string,
-    author: string,
-    book_cover: string,
-    read: boolean,
-    review?:string,
-}
-
-const defaultBooks: Book[] = [];
-
 
 function Library() {
-    const [books, setBooks] = React.useState<Book[]>(defaultBooks);
 
     return (
         <>

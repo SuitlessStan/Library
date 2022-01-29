@@ -16,7 +16,6 @@ import BookReview from "./library/book-review";
 const IMAGE =
   "https://images-na.ssl-images-amazon.com/images/I/61ZKNw0xixL.jpg";
 
-const responsiveFontStyles = ["sm", "md", "xl"];
 
 export default function BookSample() {
   return (
@@ -29,17 +28,15 @@ export default function BookSample() {
         boxShadow={["md", "lg", "2xl"]}
         rounded={["sm", "md", "lg"]}
         pos={"relative"}
-        zIndex={1}
+        zIndex={0}
       >
         <BookCover bookCoverURL={IMAGE} />
         <Stack pt={10} spacing={[5, 13, 15]} align={"center"}>
           <BookGenre bookGenre="HORROR" />
-          
           <BookTitle bookTitle="How to do things 101" />
           <VStack align="center">
             <ReadingStatus readingStatus={15} />
-
-            <BookReview bookReview={"lorem20"} />
+            <BookReview bookReview={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, rerum?"} />
           </VStack>
         </Stack>
       </Box>
