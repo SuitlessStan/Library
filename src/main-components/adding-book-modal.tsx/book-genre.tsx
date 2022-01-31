@@ -14,7 +14,7 @@ export default function AddBookGenre({
   return (
     <FormControl id="book-genre">
       <FormLabel>Book Genre</FormLabel>
-      <Select value={bookGenre} onChange={onChange} name="genre">
+      <Select value={bookGenre} onChange={onChange} name="genre" placeholder="Select the book's genre">
         <option value="Action and Adventure">Action and Adventure</option>
         <option value="Classics">Classics</option>
         <option value="Comic Book or Graphic Novel">

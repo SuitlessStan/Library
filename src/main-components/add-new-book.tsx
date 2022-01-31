@@ -19,25 +19,11 @@ import {
 } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-} from "@chakra-ui/react";
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from "@chakra-ui/react";
 import AddBookAuthor from "./adding-book-modal.tsx/book-author";
 import AddBookGenre from "./adding-book-modal.tsx/book-genre";
 import AddBookReview from "./adding-book-modal.tsx/book-review";
 import AddBookTitle from "./adding-book-modal.tsx/book-title";
 import Book from "./interfaces/book";
-import AddNumberOfPages from "./adding-book-modal.tsx/book-pages";
 
 export default function AddNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -77,13 +63,14 @@ function AddNewBookModal({
     author: "",
     genre: "",
     review: "",
+    readingStatus:"not read",
   });
 
 
   const updateChange = (e: any) => {
     const { value, name } = e.target;
     setBooks((prevState: any) => {
-      return {
+      return {  
         ...prevState,
         [name]: value,
       };
@@ -108,7 +95,9 @@ function AddNewBookModal({
               bookAuthor={book.author}
               onChange={(e) => updateChange(e)}
             />
-            <ReadingStatus />
+            <ReadingStatus
+            
+            />
             <AddBookGenre
               bookGenre={book.genre}
               onChange={(e) => updateChange(e)}
@@ -130,10 +119,10 @@ function AddNewBookModal({
 }
 
 function ReadingStatus() {
-  const [value, setValue]: [string, (value: string) => void] =
-    React.useState("read");
+  const [switchValue,setSwitchValue] = React.useState<string>("not read");
+
   return (
-    <RadioGroup onChange={setValue} value={value} float={"left"}>
+    <RadioGroup onChange={setSwitchValue} name="readingStatus" value={switchValue} float={"left"}>
       <HStack>
         <Radio value="read">Read</Radio>
         <Radio value="not read">Not read</Radio>

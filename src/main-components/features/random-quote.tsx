@@ -1,4 +1,4 @@
-import {Badge, Box, Button, Code,  Container,  Text, VStack} from '@chakra-ui/react';
+import {Badge, Box, Button,Text, VStack} from '@chakra-ui/react';
 import React from 'react';
 import axios from 'axios';
 
