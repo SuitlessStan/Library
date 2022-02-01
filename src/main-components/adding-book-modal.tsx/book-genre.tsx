@@ -1,4 +1,4 @@
-import { Select, FormHelperText } from "@chakra-ui/react";
+import { Select, FormHelperText, Box } from "@chakra-ui/react";
 import React from "react";
 import { FormControl, FormLabel } from "@chakra-ui/react";
 
@@ -12,7 +12,7 @@ export default function AddBookGenre({
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
 }) {
   return (
-    <FormControl id="book-genre">
+    <Box w={"100%"}>
       <FormLabel>Book Genre</FormLabel>
       <Select value={bookGenre} onChange={onChange} name="genre" placeholder="Select the book's genre">
         <option value="Action and Adventure">Action and Adventure</option>
@@ -30,6 +30,6 @@ export default function AddBookGenre({
         <option value="Suspense and Thrillers">Suspense and Thrillers</option>
       </Select>
       <FormHelperText>Select book genre</FormHelperText>
-    </FormControl>
+    </Box>
   );
 }

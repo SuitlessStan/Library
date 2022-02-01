@@ -16,14 +16,15 @@ import {
   Badge,
   HStack,
   Box,
+  Radio,
+  RadioGroup,
+  Stack,
 } from "@chakra-ui/react";
-import { Radio, RadioGroup } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import AddBookAuthor from "./adding-book-modal.tsx/book-author";
 import AddBookGenre from "./adding-book-modal.tsx/book-genre";
 import AddBookReview from "./adding-book-modal.tsx/book-review";
-import AddBookTitle from "./adding-book-modal.tsx/book-title";
 import Book from "./interfaces/book";
+import BookModalInput from "./adding-book-modal.tsx/modal-input";
 
 export default function AddNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,10 +67,12 @@ function AddNewBookModal({
     readingStatus:"not read",
   });
 
+  let [readStatus,setReadStatus] = React.useState(book.readingStatus);
+
 
   const updateChange = (e: any) => {
     const { value, name } = e.target;
-    setBooks((prevState: any) => {
+    setBooks((prevState: Book) => {
       return {  
         ...prevState,
         [name]: value,
@@ -77,6 +80,7 @@ function AddNewBookModal({
     });
     console.log(book);
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -87,25 +91,38 @@ function AddNewBookModal({
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing={5}>
-            <AddBookTitle
-              bookTitle={book.title}
-              onChange={(e) => updateChange(e)}
+            <BookModalInput
+            formLabel={"Book Title"}
+            formHelperText={"The name of the book you are reading"}
+            inputName={"title"}
+            inputValue={book.title}
+            inputValueUpdate={updateChange}
             />
-            <AddBookAuthor
-              bookAuthor={book.author}
-              onChange={(e) => updateChange(e)}
-            />
-            <ReadingStatus
-            
+            <BookModalInput
+            formLabel={"Book Author"}
+            formHelperText={"The author of the book you are reading"}
+            inputName={"author"}
+            inputValue={book.author}
+            inputValueUpdate={updateChange}
             />
             <AddBookGenre
-              bookGenre={book.genre}
-              onChange={(e) => updateChange(e)}
+            bookGenre={book.genre}
+            onChange={updateChange}
             />
-            <AddBookReview
-              bookReview={book.review}
-              onChange={(e) => updateChange(e)}
-            />
+            <RadioGroup name="readingStatus" value={readStatus} onChange={val => {setReadStatus(val);
+            setBooks((prevState : Book) => {
+              return {
+                ...prevState,
+                [name]:val,
+              }
+            }); 
+            }}>
+              <Stack direction="row">
+                <Radio value="not read">not read</Radio>
+                <Radio value="read">read</Radio>
+              </Stack>
+            </RadioGroup>
+            
           </VStack>
         </ModalBody>
         <ModalFooter>
@@ -118,15 +135,11 @@ function AddNewBookModal({
   );
 }
 
-function ReadingStatus() {
-  const [switchValue,setSwitchValue] = React.useState<string>("not read");
-
+function ReadingStatus({readingStatus} : {readingStatus:string}) {
+  const [switchValue,setSwitchValue] = React.useState<string>(readingStatus);
   return (
-    <RadioGroup onChange={setSwitchValue} name="readingStatus" value={switchValue} float={"left"}>
-      <HStack>
-        <Radio value="read">Read</Radio>
-        <Radio value="not read">Not read</Radio>
-      </HStack>
-    </RadioGroup>
+    <HStack>
+      Labe
+    </HStack>
   );
 }

@@ -1,7 +1,6 @@
 import { Input, FormHelperText } from "@chakra-ui/react";
 import React from "react";
-import { FormControl, FormLabel } from "react-bootstrap";
-import bookAuthor from "./book-author";
+import { FormControl, FormLabel } from "@chakra-ui/react";
 
 export default function AddNumberOfPages({
   bookPages,
