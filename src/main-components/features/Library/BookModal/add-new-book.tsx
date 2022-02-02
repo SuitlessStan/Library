@@ -66,44 +66,55 @@ function AddNewBookModal({
     author: "",
     genre: "",
     review: "",
-    readingStatus: false,
+    readingStatus: null,
+    current_page:null,
+    pages_count:null,
   });
 
-  let [readStatus, setReadStatus] = React.useState(book.readingStatus);
 
+  // const updateChange = (e: any) => {
 
-  const updateChange = (e: any) => {
+  //   const { value, name } = e.target;
+  //   let check = value;
+  //   if (check === 'true') {
+  //     check = false;
+  //     console.log("********", check)
 
-    const { value, name } = e.target;
-    let check = value;
-    if (check === 'true') {
-      check = false;
-      console.log("********", check)
+  //   } else {
+  //     check = true
+  //     console.log("***************************", check)
 
-    } else {
-      check = true
-      console.log("***************************", check)
+  //   }
+  //   if (name === "readingStatus") {
+  //     console.log("***************************", check)
+  //     setBooks((prevState: Book) => {
+  //       return {
+  //         ...prevState,
+  //         [name]: check,
+  //       };
+  //     });
+  //   } else {
+  //     setBooks((prevState: Book) => {
+  //       return {
+  //         ...prevState,
+  //         [name]: value,
+  //       };
+  //     });
+  //   }
 
-    }
-    if (name === "readingStatus") {
-      console.log("***************************", check)
-      setBooks((prevState: Book) => {
-        return {
-          ...prevState,
-          [name]: check,
-        };
-      });
-    } else {
-      setBooks((prevState: Book) => {
-        return {
-          ...prevState,
-          [name]: value,
-        };
-      });
-    }
+  //   console.log(book);
+  // };
 
+  const updateChange = (e:any) => {
+    const {name,value} = e.target;
+    setBooks((initialInput:Book) => {
+      return {
+        ...initialInput,
+        [name] : value,
+      }
+    });
     console.log(book);
-  };
+  }
 
 
   return (
@@ -137,7 +148,13 @@ function AddNewBookModal({
                 bookGenre={book.genre}
                 onChange={updateChange}
               />
-              <ReadingStatus inputName="readingStatus" readStatus={book.readingStatus?.toString()} onChange={updateChange} />
+              <ReadingStatus 
+                readingStatusInputName="readingStatus"
+                currentPageInputName="current-page"
+                bookPagesInputName="pages-count"
+                current_page={book.current_page}
+                pages_count={book.pages_count}
+                onChange={updateChange} />
 
             </VStack>
           </FormControl>
