@@ -7,11 +7,11 @@ import {
 } from "@chakra-ui/react";
 
 import * as React from "react";
-import BookCover from "./library/book-cover";
-import BookGenre from "./library/book-genre";
-import BookTitle from "./library/book-title";
-import ReadingStatus from "./library/reading-status";
-import BookReview from "./library/book-review";
+import BookCover from "./book-cover";
+import BookGenre from "./book-genre";
+import BookTitle from "./book-title";
+import ReadingStatus from "./reading-status";
+import BookReview from "./book-review";
 
 const IMAGE =
   "https://images-na.ssl-images-amazon.com/images/I/61ZKNw0xixL.jpg";
