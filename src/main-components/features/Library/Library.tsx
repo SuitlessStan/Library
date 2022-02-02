@@ -1,7 +1,7 @@
 import * as React from 'react';
-import BookSample from './features/Library/BookTemplate/BookTemplate';
+import BookSample from './BookTemplate/BookTemplate';
 import {Box,SimpleGrid} from '@chakra-ui/react';
-import AddNewBook from './features/Library/BookModal/add-new-book';
+import AddNewBook from './BookModal/add-new-book';
 
 
 
