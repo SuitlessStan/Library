@@ -1,56 +1,89 @@
-import {Badge, Box, Button,Text, VStack} from '@chakra-ui/react';
-import React from 'react';
+import { Badge, Box, Text, VStack, Container ,CircularProgress } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FadeIn from 'react-fade-in';
 
 
 
 
-interface Quote {
-    id:number,
-    author:string,
-    content:string,
+const randomQuoteURL = 'https://api.quotable.io/random';
+
+
+
+
+type Quote = {
+    id: string,
+    content: string,
+    author: string
 }
 
-const defaultRandomQuote : any = [];
+// placeholder object to hold initial quote state 
+const quoteObject: Quote = {
+    id: "",
+    content: "",
+    author: ""
+}
 
-const URL : string = 'https://api.quotable.io/random';
+const RandomQuotes = () => {
+    const [quote, setQuote] = useState<Quote | null>(null);
+    const [error, setError] = useState("");
+
+    const fetchQuote = () => {
+        axios.get<Quote>(randomQuoteURL)
+            .then(response => {
+                setQuote(response.data);
+            })
+            .catch(ex => {
+                setError(ex);
+                console.log(error)
+            });
+    }
+
+    useEffect(() => {
+        const myInterval = setInterval(fetchQuote, 10000);
+        return () => {
+            clearInterval(myInterval);
+        }
+    }, [error]);
 
 
-function RandomQuotes(){
-    const [quote,setQuote] = React.useState(defaultRandomQuote);
-
-    const update = () => {
-        axios.get<Quote>(URL)
-        .then(response => {
-           setQuote(response.data);
-        })
-        .catch(ex => {
-            if (ex.response.status === 404){
-                const errorMessage = 'Something has gone wrong!';
-                console.log(errorMessage);
-            }
-        });
-    };
-    React.useEffect(update,[]);
+    if (quote){
+        const { id, content, author } = quote;
+    }
 
     return (
-    <VStack>
-         <Box p={3}>
-            <Text fontSize="3xl" color="dark" fontStyle="italic" textAlign={"center"}>
-                {quote.content}
-            </Text>
-         </Box>
-        <Badge>{" - " + quote.author}</Badge>
-        <br/>
-        <Button m={4} variant="ghost" onClick={update}>
-            Next
-        </Button>
-    </VStack>
-    );
+        <>
+        {!quote && <CircularProgress isIndeterminate size={8}/>}
+        {quote && <RandomQuote quoteID={quote.id} quoteContent={quote.content} quoteAuthor={quote.author}/>}
+        </>
+        
+    )
 }
 
 
+interface RandomQuoteProps {
+    quoteID: string,
+    quoteContent: string,
+    quoteAuthor: string,
+    onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined,
+}
 
+const RandomQuote = ({ quoteID, quoteContent, quoteAuthor }: RandomQuoteProps) => {
+    return (
+        <VStack>
+            <FadeIn>
+                <Container key={quoteID} maxWidth={650}>
+                    <Text fontSize="md" color="dark" fontStyle="italic" textAlign={"center"}>
+                        {quoteContent}
+                    </Text>
+                </Container>
+            </FadeIn>
+            <FadeIn>
+                <Badge>{" - " + quoteAuthor}</Badge>
+            </FadeIn>
+        </VStack>
+    );
+}
 
 export default RandomQuotes;
 

@@ -8,7 +8,7 @@ const BookCover = ({ bookCoverURL }: { bookCoverURL: string }) => {
         rounded={"lg"}
         mt={-12}
         pos={"relative"}
-        height={["150", "400", "500"]}
+        height={[200, 200, 200]}
         _after={{
           transition: "all .3s ease",
           content: '""',
@@ -23,16 +23,17 @@ const BookCover = ({ bookCoverURL }: { bookCoverURL: string }) => {
         }}
         _groupHover={{
           _after: {
-            filter: "blur(20px)",
+            filter: "blur(30px)",
           },
         }}
       >
         <Image
-          rounded={"lg"}
-          height={["180", "400", "500"]}
-          width={["sm", "400", "500"]}
-          objectFit={"cover"}
+          rounded={"md"}
+          height="full"
+          width="full"
+          // objectFit={"cover"}
           src={bookCoverURL}
+          justifyContent="center"
         />
       </Box>
     );

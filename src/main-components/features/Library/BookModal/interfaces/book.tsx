@@ -3,7 +3,7 @@ export default interface Book {
   author: string;
   pages_count?: number | null | 0;
   current_page?: number | null | 0;
-  readingStatus?:boolean | null;
+  readingStatus?:string;
   genre: string;
   review: string;
 }

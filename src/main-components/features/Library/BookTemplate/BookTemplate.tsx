@@ -19,11 +19,10 @@ const IMAGE =
 
 export default function BookSample() {
   return (
-    <Center py={["sm", "md", "lg"]}>
-      <Box
+    <Box
         role={"group"}
         p={6}
-        maxW={["sm", "md", "lg"]}
+        w={[250, 250, 250]}
         bg={useColorModeValue("white", "gray.800")}
         boxShadow={["md", "lg", "2xl"]}
         rounded={["sm", "md", "lg"]}
@@ -39,8 +38,7 @@ export default function BookSample() {
             <BookReview bookReview={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, rerum?"} />
           </VStack>
         </Stack>
-      </Box>
-    </Center>
+    </Box>
   );
 }
 

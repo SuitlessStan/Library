@@ -5,7 +5,7 @@ const BookTitle = ({ bookTitle }: { bookTitle: string }) => {
   return (
     <>
       <Heading
-        fontSize={["sm", "md", "xl"]}
+        fontSize={[12, 13, 14]}
         fontFamily={"roboto"}
         fontWeight={800}
         textAlign={"center"}

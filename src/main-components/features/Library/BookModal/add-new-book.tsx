@@ -14,11 +14,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Badge,
-  HStack,
   Box,
-  Radio,
-  RadioGroup,
-  Stack,
   FormControl,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
@@ -66,9 +62,9 @@ function AddNewBookModal({
     author: "",
     genre: "",
     review: "",
-    readingStatus: null,
-    current_page:null,
-    pages_count:null,
+    readingStatus: "not read",
+    current_page:15,
+    pages_count:400,
   });
 
 
@@ -116,7 +112,6 @@ function AddNewBookModal({
     console.log(book);
   }
 
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -148,13 +143,13 @@ function AddNewBookModal({
                 bookGenre={book.genre}
                 onChange={updateChange}
               />
-              <ReadingStatus 
-                readingStatusInputName="readingStatus"
-                currentPageInputName="current-page"
-                bookPagesInputName="pages-count"
-                current_page={book.current_page}
-                pages_count={book.pages_count}
-                onChange={updateChange} />
+              <ReadingStatus
+                readStatus={book.readingStatus}
+                onChange={updateChange}
+                current_page={20}
+                pages_count={400}
+              />
+             
 
             </VStack>
           </FormControl>

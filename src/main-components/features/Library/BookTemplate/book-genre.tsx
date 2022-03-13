@@ -7,7 +7,7 @@ const BookGenre = ({ bookGenre }: { bookGenre: string }) => {
       <HStack spacing={"20"}>
         <Text
           color={"gray.500"}
-          fontSize={["sm", "md", "lg"]}
+          fontSize={[12, 13, 14]}
           textTransform={"uppercase"}
           fontWeight={"bold"}
         >

@@ -1,7 +1,7 @@
 import { Input, FormHelperText,FormErrorMessage, Box } from "@chakra-ui/react";
 import React from "react";
 import { FormLabel } from "@chakra-ui/react";
-import BookModal from "../interfaces/BookModal";
+import BookModal from "./interfaces/BookModal";
 
 
 

@@ -3,9 +3,7 @@ import {
   ChakraProvider,
   Box,
   theme,
-  Grid,
-  GridItem,
-  Center,
+  VStack
 } from "@chakra-ui/react";
 import RandomQuotes from "./main-components/features/random-quote";
 import Nav from "./main-components/top-bar";
@@ -18,29 +16,22 @@ export const App = () => (
     <Box>
       <Nav />
       <LandingPage />
-      <Library />
+      {/* <Library /> */}
     </Box>
   </ChakraProvider>
 );
 
-
 const LandingPage = () => {
   return (
   <>
-    <Grid
-    templateRows="repeat(3,1fr)"
-    templateColumns="repeat(4,1fr)"
-    borderRadius="md"
-    >
-      <GridItem rowSpan={3} colSpan={4}>
-        <Center>
-          <CaptionCarousel />
-        </Center>
-      </GridItem>
-      <GridItem rowSpan={3} colSpan={4}>
-        <RandomQuotes />
-      </GridItem>
-    </Grid>
+    <VStack>
+      <CaptionCarousel />
+      <RandomQuotes />
+    </VStack>
   </>
   );
 }
+
+
+
+

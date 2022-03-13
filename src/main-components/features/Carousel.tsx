@@ -38,13 +38,11 @@ type Photo = {
 
 
 
-let randomPictures: any = [];
-
 
 export default function CaptionCarousel() {
 
-  const [images, setImage]  = React.useState(randomPictures);
-  const [error, setError]: [string, (error: string) => void] = React.useState("");
+  const [images, setImage]  = React.useState<any>([]);
+  const [error, setError] = React.useState("");
 
   React.useEffect(
     () => {
@@ -56,8 +54,7 @@ export default function CaptionCarousel() {
           setError(ex);
           console.log(error);
         })
-    }, []
-  );
+    }, [error]);
 
 
   const [slider, setSlider] = React.useState<Slider | null>(null);
@@ -85,8 +82,8 @@ export default function CaptionCarousel() {
     <Box
     borderRadius="md"
       position={'relative'}
-      height={'650px'}
-      width={'95vw'}
+      height={['350px','450px','450px']}
+      width={['90vw','60vw','60vw']}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
       <link
@@ -144,10 +141,10 @@ export default function CaptionCarousel() {
                 position="absolute"
                 top="30%"
                 transform="translate(0, -50%)">
-                <Heading fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}>
+                <Heading fontSize={"lg"}>
                   {card.location.title}
                 </Heading>
-                <Text fontSize={{ base: 'lg', lg: 'lg' }}>
+                <Text fontSize={"sm"}>
                 {card.location.country && card.location.city ? card.location.country + ' , ' + card.location.city : ' '}
                 </Text>
               </Stack>
