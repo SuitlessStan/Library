@@ -1,17 +1,15 @@
-import { ReactNode } from 'react';
 import * as React from 'react';
+import {Link } from "react-router-dom";
 import {
   Box,
   Flex,
   Avatar,
-  Link,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
@@ -21,79 +19,89 @@ import {
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-);
 
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const greetingMesage = (date: Date) => {
+    date = new Date();
+    let currentHour: number = date.getHours();
+    if (currentHour < 12 && currentHour > 0) {
+      return "Good Morning";
+    }
+    else if (currentHour < 16 && currentHour > 12) {
+      return "Good Afternoon";
+    }
+    else {
+      return "Good Evening";
+    }
+  }
+
   return (
+
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>
-            <Container>
-              <Text
-              fontWeight={"bold"}
-              fontSize={"xl"}
-              >
-                Hello, Issam
-              </Text>
-            </Container>
-          </Box>
+        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+          <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            <Box>
+              <Container>
+                <Text
+                  fontWeight="bold"
+                  fontSize="xl"
+                  fontStyle="italic"
+                  fontFamily="Roboto"
+                >
+                  {greetingMesage(new Date())}
+                </Text>
+              </Container>
+            </Box>
 
-          <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
-              <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-              </Button>
+            <Flex alignItems={'center'}>
+              <Stack direction={'row'} spacing={7}>
+                <Button onClick={toggleColorMode}>
+                  {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                </Button>
 
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}>
-                  <Avatar
-                    size={'md'}
-                    src={'https://avatars.dicebear.com/api/male/username.svg'}
-                  />
-                </MenuButton>
-                <MenuList alignItems={'center'}>
-                  <br />
-                  <Center>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={'full'}
+                    variant={'link'}
+                    cursor={'pointer'}
+                    minW={0}>
                     <Avatar
-                      size={'2xl'}
-                      src={'https://avatars.dicebear.com/api/male/username.svg'}
+                      size={'md'}
+                      src={'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/278696_full'}
                     />
-                  </Center>
-                  <br />
-                  <Center>
-                    <p>Username</p>
-                  </Center>
-                  <br />
-                  <MenuDivider />
-                  <MenuItem>My Books</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
-            </Stack>
+                  </MenuButton>
+                  <MenuList alignItems={'center'}>
+                    <br />
+                    <Center>
+                      <Avatar
+                        size={'2xl'}
+                        src={'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/278696_full'}
+                      />
+                    </Center>
+                    <br />
+                    <Center>
+                      <Text fontSize={"lg"}>Issam</Text>
+                    </Center>
+                    <br />
+                    <MenuDivider />
+                    <MenuItem>
+                      <Link to="/books">My Books</Link>
+                    </MenuItem>
+                    <MenuItem>Account Settings</MenuItem>
+                    <MenuItem>Logout</MenuItem>
+                  </MenuList>
+                </Menu>
+              </Stack>
+            </Flex>
           </Flex>
-        </Flex>
-      </Box>
+        </Box>
     </>
   );
 }
+
+
+

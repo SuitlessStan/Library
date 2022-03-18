@@ -4,11 +4,19 @@ import ReactDOM from "react-dom"
 import { App } from "./App"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
+import { BrowserRouter, Routes,Route } from "react-router-dom";
+import Library from "./main-components/features/Library/Library"
+
 
 ReactDOM.render(
   <React.StrictMode>
+    <BrowserRouter>
     <ColorModeScript />
-    <App />
+      <Routes>
+        <Route path="/" element={<App />}/>
+        <Route path="/books" element={<Library/>}/>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 )

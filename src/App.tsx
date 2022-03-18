@@ -8,7 +8,6 @@ import {
 import RandomQuotes from "./main-components/features/random-quote";
 import Nav from "./main-components/top-bar";
 import CaptionCarousel from "./main-components/features/Carousel";
-import Library from "./main-components/features/Library/Library";
 
 
 export const App = () => (
@@ -16,7 +15,6 @@ export const App = () => (
     <Box>
       <Nav />
       <LandingPage />
-      {/* <Library /> */}
     </Box>
   </ChakraProvider>
 );
