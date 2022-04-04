@@ -1,4 +1,4 @@
-import { Badge, Box, Text, VStack, Container ,CircularProgress } from '@chakra-ui/react';
+import { Badge, Box, Text, VStack, Container, CircularProgress } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FadeIn from 'react-fade-in';
@@ -47,16 +47,16 @@ const RandomQuotes = () => {
     }, [error]);
 
 
-    if (quote){
+    if (quote) {
         const { id, content, author } = quote;
     }
 
     return (
         <>
-        {!quote && <CircularProgress isIndeterminate size={8}/>}
-        {quote && <RandomQuote quoteID={quote.id} quoteContent={quote.content} quoteAuthor={quote.author}/>}
+            {!quote && <CircularProgress isIndeterminate size={8} />}
+            {quote && <RandomQuote quoteID={quote.id} quoteContent={quote.content} quoteAuthor={quote.author} />}
         </>
-        
+
     )
 }
 
@@ -72,8 +72,8 @@ const RandomQuote = ({ quoteID, quoteContent, quoteAuthor }: RandomQuoteProps) =
     return (
         <VStack>
             <FadeIn>
-                <Container key={quoteID} maxWidth={650}>
-                    <Text fontSize="md" color="dark" fontStyle="italic" textAlign={"center"}>
+                <Container key={quoteID} maxWidth={680} maxHeight={200}>
+                    <Text fontSize="md" fontFamily={"Roboto"} color="dark" fontStyle="italic" textAlign={"center"}>
                         {quoteContent}
                     </Text>
                 </Container>

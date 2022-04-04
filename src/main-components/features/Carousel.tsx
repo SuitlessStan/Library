@@ -29,10 +29,10 @@ type Photo = {
     name: string;
   };
   location: {
-    title:string,
-    name:string,
-    city:string,
-    country:string,
+    title: string,
+    name: string,
+    city: string,
+    country: string,
   }
 };
 
@@ -41,7 +41,7 @@ type Photo = {
 
 export default function CaptionCarousel() {
 
-  const [images, setImage]  = React.useState<any>([]);
+  const [images, setImage] = React.useState<any>([]);
   const [error, setError] = React.useState("");
 
   React.useEffect(
@@ -62,7 +62,7 @@ export default function CaptionCarousel() {
 
   // Settings for the slider
   const settings = {
-    dots: true,   
+    dots: true,
     arrows: false,
     fade: true,
     infinite: true,
@@ -80,10 +80,11 @@ export default function CaptionCarousel() {
 
   return (
     <Box
-    borderRadius="md"
+      borderRadius="md"
+      bgGradient="linear(to-t,black,white)"
       position={'relative'}
-      height={['350px','450px','450px']}
-      width={['90vw','60vw','60vw']}
+      height={['350px', '450px', '450px']}
+      width={['90vw', '60vw', '60vw']}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
       <link
@@ -122,18 +123,23 @@ export default function CaptionCarousel() {
         <BiRightArrowAlt size="40px" />
       </IconButton>
       {/* Slider */}
-      <Slider {...settings} ref={(slider: any) => setSlider(slider)}>
-        {images.map((card:Photo, index: React.Key | null | undefined) => (
+      <Slider {...settings} ref={(slider: any) => setSlider(slider)} >
+        {images.map((card: Photo, index: React.Key | null | undefined) => (
           <Box
+            zIndex={1000}
+            bgGradient="linear(to-t,black,white)"
+            style={{
+              background: 'linear-gradient(#e66465, #9198e5)'
+            }}
             key={card.id}
             height={'2xl'}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
-            backgroundImage={`url(${card.urls.regular})`}>
+            backgroundImage={`url(${card.urls.regular}),linear-gradient(#e66465, #9198e5)`}>
             {/* This is the block you need to change, to customize the caption */}
-            <Container size="container.lg" height="600px" position="relative">
+            <Container size="container.lg" height="600px" position="relative" >
               <Stack
                 spacing={6}
                 w={'full'}
@@ -141,12 +147,16 @@ export default function CaptionCarousel() {
                 position="absolute"
                 top="30%"
                 transform="translate(0, -50%)">
-                <Heading fontSize={"lg"}>
-                  {card.location.title}
-                </Heading>
-                <Text fontSize={"sm"}>
-                {card.location.country && card.location.city ? card.location.country + ' , ' + card.location.city : ' '}
-                </Text>
+                <Box style={{
+                  backgroundColor: 'rgba(0,0,0,0.4)'
+                }}>
+                  <Heading fontSize={"lg"}>
+                    {card.location.title}
+                  </Heading>
+                  <Text fontSize={"sm"}>
+                    {card.location.country && card.location.city ? card.location.country + ' , ' + card.location.city : ' '}
+                  </Text>
+                </Box>
               </Stack>
             </Container>
           </Box>
