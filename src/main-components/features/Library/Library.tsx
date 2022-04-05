@@ -1,4 +1,3 @@
-import BookSample from './BookTemplate/BookTemplate';
 import { ChakraProvider, Box, extendTheme, ButtonGroup } from '@chakra-ui/react';
 import TinySlider from "tiny-slider-react";
 import 'tiny-slider/dist/tiny-slider.css';
@@ -19,7 +18,8 @@ import {
     Input,
     Center,
     Textarea,
-    Select
+    Select,
+    IconButton
 } from '@chakra-ui/react'
 import {
     Modal,
@@ -57,9 +57,9 @@ const settings = {
 
 };
 
-const clickEvent = (slide: any, info: any) => {
-    console.log(slide, info);
-};
+// const clickEvent = (slide: any, info: any) => {
+//     console.log(slide, info);
+// };
 
 
 
@@ -116,22 +116,21 @@ function Library() {
 export default Library;
 
 
-interface Book {
-    bookTitle: string;
-    bookAuthor: string;
-    currentPage: number;
-    bookPages: number;
-    readStatus?: boolean;
-    bookGenre: string;
-    bookReview?: string;
-}
+// interface Book {
+//     bookTitle: string;
+//     bookAuthor: string;
+//     currentPage: number;
+//     bookPages: number;
+//     readStatus?: boolean;
+//     bookGenre: string;
+//     bookReview?: string;
+// }
 
 
 function BookLibrary() {
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    let [storedBooks, setStoredBooks] = useState<Book[]>([]);
 
     // Calculating reading percentage
 
@@ -182,17 +181,21 @@ function BookLibrary() {
             bookReview: Yup.string().required("A book review is required on submission"),
         }),
         onSubmit: values => {
-            // alert(JSON.stringify(values, null, 2));
-            setStoredBooks(oldArray => [...oldArray, values]);
+            onClose();
+
+            localStorage.setItem(values.bookTitle, JSON.stringify(values));
+
             toast({
                 title: 'Addition successful',
                 description: "A new book was added!",
                 status: 'success',
                 duration: 4500,
                 isClosable: true,
-            })
+            });
+
         },
     });
+
     const validator = (first: boolean | undefined, second: string | undefined | number) => {
         if (first && second) {
             return true;
@@ -202,8 +205,8 @@ function BookLibrary() {
         }
     }
 
-
     const toast = useToast();
+
 
 
     return (
@@ -213,29 +216,26 @@ function BookLibrary() {
                     {/* Greeting Message */}
                     <Box>
                         <Container>
-                            <Text
-                                fontWeight="bold"
-                                fontSize="xl"
-                                fontStyle="italic"
-                                fontFamily="Roboto"
-                            >
-                                {greetingMesage(new Date())}
-                            </Text>
+                            <HStack>
+                                <Text
+                                    fontWeight="bold"
+                                    fontSize="xl"
+                                    fontStyle="italic"
+                                    fontFamily="Roboto"
+                                >
+                                    {greetingMesage(new Date())}
+                                </Text>
+                                {greetingMesage(new Date) === "Good Morning" ? <SunIcon /> : <MoonIcon />}
+                            </HStack>
                         </Container>
                     </Box>
 
                     <Flex alignItems={'center'} justifyContent={"center"}>
                         <Stack direction={'row'} spacing={7}>
-                            <Button
-                                variant={'solid'}
-                                colorScheme={'teal'}
-                                size={'md'}
-                                onClick={onOpen}
-                                mr={4}
-                                leftIcon={<AddIcon />}>
-
-                                Add a new book
-                            </Button>
+                            <ButtonGroup size='sm' isAttached variant='solid' colorScheme={'teal'}>
+                                <Button onClick={onOpen} mr='-px'>Add a new book</Button>
+                                <IconButton onClick={onOpen} aria-label='Add a new book' icon={<AddIcon />} />
+                            </ButtonGroup>
 
                             <Button onClick={toggleColorMode}>
                                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}

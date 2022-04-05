@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -15,7 +15,8 @@ import {
   useColorMode,
   Center,
   Text,
-  Container
+  Container,
+  HStack
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
@@ -41,10 +42,11 @@ export default function Nav() {
   return (
 
     <>
-        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-          <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-            <Box>
-              <Container>
+      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+          <Box>
+            <Container>
+              <HStack>
                 <Text
                   fontWeight="bold"
                   fontSize="xl"
@@ -53,52 +55,54 @@ export default function Nav() {
                 >
                   {greetingMesage(new Date())}
                 </Text>
-              </Container>
-            </Box>
+                {greetingMesage(new Date) === "Good Morning" ? <SunIcon /> : <MoonIcon />}
+              </HStack>
+            </Container>
+          </Box>
 
-            <Flex alignItems={'center'}>
-              <Stack direction={'row'} spacing={7}>
-                <Button onClick={toggleColorMode}>
-                  {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                </Button>
+          <Flex alignItems={'center'}>
+            <Stack direction={'row'} spacing={7}>
+              <Button onClick={toggleColorMode}>
+                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              </Button>
 
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rounded={'full'}
-                    variant={'link'}
-                    cursor={'pointer'}
-                    minW={0}>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={'full'}
+                  variant={'link'}
+                  cursor={'pointer'}
+                  minW={0}>
+                  <Avatar
+                    size={'md'}
+                    src={'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/278696_full'}
+                  />
+                </MenuButton>
+                <MenuList alignItems={'center'}>
+                  <br />
+                  <Center>
                     <Avatar
-                      size={'md'}
+                      size={'2xl'}
                       src={'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/278696_full'}
                     />
-                  </MenuButton>
-                  <MenuList alignItems={'center'}>
-                    <br />
-                    <Center>
-                      <Avatar
-                        size={'2xl'}
-                        src={'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/278696_full'}
-                      />
-                    </Center>
-                    <br />
-                    <Center>
-                      <Text fontSize={"lg"}>Issam</Text>
-                    </Center>
-                    <br />
-                    <MenuDivider />
-                    <MenuItem>
-                      <Link to="/books">My Books</Link>
-                    </MenuItem>
-                    <MenuItem>Account Settings</MenuItem>
-                    <MenuItem>Logout</MenuItem>
-                  </MenuList>
-                </Menu>
-              </Stack>
-            </Flex>
+                  </Center>
+                  <br />
+                  <Center>
+                    <Text fontSize={"lg"}>Issam</Text>
+                  </Center>
+                  <br />
+                  <MenuDivider />
+                  <MenuItem>
+                    <Link to="/books">My Books</Link>
+                  </MenuItem>
+                  <MenuItem>Account Settings</MenuItem>
+                  <MenuItem>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            </Stack>
           </Flex>
-        </Box>
+        </Flex>
+      </Box>
     </>
   );
 }

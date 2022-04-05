@@ -7,6 +7,8 @@ import {
   Heading,
   Text,
   Container,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Slider from 'react-slick';
@@ -78,13 +80,16 @@ export default function CaptionCarousel() {
   const top = useBreakpointValue({ base: '90%', md: '50%' });
   const side = useBreakpointValue({ base: '30%', md: '40px' });
 
+  // const {colorMode,toggleColorMode} = useColorMode();
+  const textColor = useColorModeValue("white", "white");
+
   return (
     <Box
       borderRadius="md"
       bgGradient="linear(to-t,black,white)"
       position={'relative'}
-      height={['350px', '450px', '450px']}
-      width={['90vw', '60vw', '60vw']}
+      height={['70vh', '450px', '450px']}
+      width={['100vw', '60vw', '60vw']}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
       <link
@@ -147,13 +152,16 @@ export default function CaptionCarousel() {
                 position="absolute"
                 top="30%"
                 transform="translate(0, -50%)">
-                <Box style={{
-                  backgroundColor: 'rgba(0,0,0,0.4)'
-                }}>
-                  <Heading fontSize={"lg"}>
+                <Box
+                  maxWidth={["80vw", "80vw", "100vw"]}
+                  style={{
+                    backgroundColor: 'rgba(0,0,0,0.4)'
+                  }}>
+                  <Heading fontSize={"lg"} color={textColor}
+                  >
                     {card.location.title}
                   </Heading>
-                  <Text fontSize={"sm"}>
+                  <Text fontSize={"sm"} color={textColor}>
                     {card.location.country && card.location.city ? card.location.country + ' , ' + card.location.city : ' '}
                   </Text>
                 </Box>
