@@ -132,11 +132,11 @@ function BookLibrary() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
 
-    // Calculating reading percentage
+    // // Calculating reading percentage
 
-    const readingPercentage = (currentReading: number, totalPages: number): number => {
-        return Math.ceil((currentReading / totalPages) * 100);
-    }
+    // const readingPercentage = (currentReading: number, totalPages: number): number => {
+    //     return Math.ceil((currentReading / totalPages) * 100);
+    // }
 
 
     // Greeting message
@@ -175,15 +175,20 @@ function BookLibrary() {
                 .max(50, 'Must be 20 characters or less')
                 .required('Book author cannot be empty and must be longer than 15 characters'),
             readStatus: Yup.boolean(),
-            currentPage: Yup.number().positive("this number must be more than 25").integer("Must be more than 0").moreThan(25).nullable(true),
-            bookPages: Yup.number().positive("this number must be more than 1200").integer("Must be more than 0").lessThan(1200).nullable(true),
+            currentPage: Yup.number().positive("this number must be more than 25").integer("Must be more than 0").moreThan(25),
+            bookPages: Yup.number().positive("this number must be more than 1200").integer("Must be more than 0").lessThan(1200),
             bookGenre: Yup.string().required('Required'),
             bookReview: Yup.string().required("A book review is required on submission"),
         }),
         onSubmit: values => {
             onClose();
 
-            localStorage.setItem(values.bookTitle, JSON.stringify(values));
+            if (!formik.errors) {
+                localStorage.setItem(values.bookTitle, JSON.stringify(values));
+            }
+            else {
+                alert(formik.errors);
+            }
 
             toast({
                 title: 'Addition successful',
@@ -212,8 +217,9 @@ function BookLibrary() {
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+                {/* Navbar */}
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                    {/* Greeting Message */}
+                    {/* Left Nav */}
                     <Box>
                         <Container>
                             <HStack>
@@ -225,11 +231,11 @@ function BookLibrary() {
                                 >
                                     {greetingMesage(new Date())}
                                 </Text>
-                                {greetingMesage(new Date) === "Good Morning" ? <SunIcon /> : <MoonIcon />}
+                                {greetingMesage(new Date()) === "Good Morning" ? <SunIcon /> : <MoonIcon />}
                             </HStack>
                         </Container>
                     </Box>
-
+                    {/* Right Nav */}
                     <Flex alignItems={'center'} justifyContent={"center"}>
                         <Stack direction={'row'} spacing={7}>
                             <ButtonGroup size='sm' isAttached variant='solid' colorScheme={'teal'}>
@@ -245,11 +251,14 @@ function BookLibrary() {
                 </Flex>
             </Box>
             <>
+                {/* Form Modal */}
                 <Modal
                     isOpen={isOpen}
                     onClose={onClose}
                     scrollBehavior={"inside"}
-                    blockScrollOnMount={true}>
+                    blockScrollOnMount={true}
+                    motionPreset="slideInRight"
+                >
                     <ModalOverlay
                         bg='blackAlpha.300'
                         backdropFilter='blur(10px) hue-rotate(90deg)'
@@ -270,7 +279,7 @@ function BookLibrary() {
                                     backgroundColor: `rgba(0, 0, 0, 0.05)`,
                                 },
                             }}>
-                            <form onSubmit={formik.handleSubmit}>
+                            <form>
                                 <VStack
                                     spacing={10}
                                     paddingTop={3}
@@ -332,6 +341,8 @@ function BookLibrary() {
                                                         />
                                                         <label>Yes</label>
                                                     </HStack>
+                                                    {(!(formik.errors.currentPage) && formik.touched.currentPage) ? "test" : <FormErrorMessage>{formik.errors.currentPage}</FormErrorMessage>}
+                                                    {(!(formik.errors.bookPages) && formik.touched.bookPages) ? "test" : <FormErrorMessage>{formik.errors.bookPages}</FormErrorMessage>}
                                                     {(!(formik.errors.readStatus) && formik.touched.readStatus) ? "" : <FormErrorMessage>{formik.errors.readStatus}</FormErrorMessage>}
                                                 </Center>
                                                 {!formik.values.readStatus ?
@@ -420,44 +431,41 @@ function BookLibrary() {
                                             {!formik.errors.bookReview ? <FormHelperText>Add a review to the book you're reading</FormHelperText> : <FormErrorMessage>{formik.errors.bookReview}</FormErrorMessage>}
                                         </FormControl>
                                     </Box>
-                                    <ButtonGroup>
-                                        <Button
-                                            colorScheme="blue"
-                                            variant="solid"
-                                            type="submit"
-                                        >
-                                            Add
-                                        </Button>
-                                        <Button
-                                            colorScheme="pink"
-                                            variant="solid"
-                                            type="reset"
-                                            onClick={formik.handleReset}
-                                        >
-                                            Reset
-                                        </Button>
-                                    </ButtonGroup>
                                 </VStack>
                             </form>
                         </ModalBody>
+                        <ModalFooter>
+                            <ButtonGroup>
+                                <Button
+                                    variant="solid"
+                                    type="submit"
+                                    // to fix later
+                                    onClick={formik.handleSubmit}
+                                >   
+                                    Add Book
+                                </Button>
+                                <Button
+                                    variant="solid"
+                                    onClick={(e) => {
+                                        onClose();
+                                        formik.handleReset(e);
+                                    }}
+                                    type="reset"
+                                >
+                                    Cancel
+                                </Button>
+                            </ButtonGroup>
+                        </ModalFooter>
                     </ModalContent>
+
                 </Modal>
             </>
 
             <>
                 <Box>
-                    <TinySlider settings={settings}>
-                        {/* {storedBooks.map((book, i) => {
-                            return <>
-                                <BookSample
-                                    key={i}
-                                    bookTitle={book.bookTitle}
-                                    bookGenre={book.bookGenre}
-                                    readingStatus={readingPercentage(book.currentPage, book.bookPages)}
-                                />
-                            </>
-                        })} */}
-                    </TinySlider>
+                    {/* <TinySlider settings={settings}>
+                       
+                    </TinySlider> */}
                 </Box>
             </>
         </>
