@@ -23,7 +23,6 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   const greetingMesage = (date: Date) => {
     date = new Date();
@@ -55,7 +54,7 @@ export default function Nav() {
                 >
                   {greetingMesage(new Date())}
                 </Text>
-                {greetingMesage(new Date) === "Good Morning" ? <SunIcon /> : <MoonIcon />}
+                {greetingMesage(new Date()) === "Good Morning" ? <SunIcon /> : <MoonIcon />}
               </HStack>
             </Container>
           </Box>

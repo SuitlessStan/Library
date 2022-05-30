@@ -1,4 +1,4 @@
-import { Badge, Box, Text, VStack, Container, CircularProgress } from '@chakra-ui/react';
+import { Badge, Text, VStack, Container, CircularProgress } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FadeIn from 'react-fade-in';
@@ -17,29 +17,29 @@ type Quote = {
     author: string
 }
 
-// placeholder object to hold initial quote state 
-const quoteObject: Quote = {
-    id: "",
-    content: "",
-    author: ""
-}
+// // placeholder object to hold initial quote state 
+// const quoteObject: Quote = {
+//     id: "",
+//     content: "",
+//     author: ""
+// }
 
 const RandomQuotes = () => {
     const [quote, setQuote] = useState<Quote | null>(null);
     const [error, setError] = useState("");
 
-    const fetchQuote = () => {
-        axios.get<Quote>(randomQuoteURL)
-            .then(response => {
-                setQuote(response.data);
-            })
-            .catch(ex => {
-                setError(ex);
-                console.log(error)
-            });
-    }
-
     useEffect(() => {
+
+        const fetchQuote = () => {
+            axios.get<Quote>(randomQuoteURL)
+                .then(response => {
+                    setQuote(response.data);
+                })
+                .catch(ex => {
+                    setError(ex);
+                    console.log(error)
+                });
+        }
         const myInterval = setInterval(fetchQuote, 10000);
         return () => {
             clearInterval(myInterval);
@@ -48,7 +48,8 @@ const RandomQuotes = () => {
 
 
     if (quote) {
-        const { id, content, author } = quote;
+        // const { id, content, author } = quote;
+
     }
 
     return (
@@ -58,6 +59,8 @@ const RandomQuotes = () => {
         </>
 
     )
+
+
 }
 
 

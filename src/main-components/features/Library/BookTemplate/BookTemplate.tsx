@@ -4,6 +4,8 @@ import {
   Stack,
   VStack,
   HStack,
+  useDisclosure,
+  Textarea,
 } from '@chakra-ui/react';
 import {
   Image,
@@ -17,30 +19,33 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   ButtonGroup,
   Button,
   FormControl,
   FormLabel,
   IconButton,
-  Textarea,
   Input
 } from '@chakra-ui/react';
 import React from 'react';
 import { EditIcon } from '@chakra-ui/icons';
 import FocusLock from 'react-focus-lock';
-
-const IMAGE =
-  'https://images-na.ssl-images-amazon.com/images/I/61ZKNw0xixL.jpg';
+import { forwardRef } from '@chakra-ui/react';
 
 
 
-export default function BookSample() {
+interface BookTemplate {
+  bookTitle: string;
+  bookCover?: string;
+  bookAuthor: string;
+  bookGenre: string;
+  bookReview: string;
+  readingStatus: number;
+}
+
+export default function BookSample(props: BookTemplate) {
+
   return (
     <>
       <Box
@@ -68,7 +73,7 @@ export default function BookSample() {
               pos: 'absolute',
               top: 5,
               left: 0,
-              backgroundImage: `url(${bookCoverURL})`,
+              backgroundImage: `url(${props.bookCover})`,
               filter: 'blur(15px)',
               zIndex: -1,
             }}
@@ -82,7 +87,7 @@ export default function BookSample() {
               rounded={'md'}
               height="full"
               width="full"
-              src={`${bookCoverURL}`}
+              src={`${props.bookCover}`}
               justifyContent="center"
             />
           </Box>
@@ -103,7 +108,7 @@ export default function BookSample() {
                     color="white"
                     aria-label="A tooltip"
                   >
-                    {/* {bookGenre} */}
+                    {props.bookGenre}
                   </Tooltip>
                 </Text>
               </Badge>
@@ -125,7 +130,7 @@ export default function BookSample() {
                 color="white"
                 aria-label="A tooltip"
               >
-                {bookTitle}
+                {props.bookTitle}
               </Tooltip>
             </Text>
           </>
@@ -137,7 +142,7 @@ export default function BookSample() {
                 color="white"
                 aria-label="A tooltip"
               >
-                {bookAuthor}
+                {props.bookAuthor}
               </Tooltip>
             </Text>
           </Code>
@@ -156,11 +161,11 @@ export default function BookSample() {
                   </Tooltip>
                 </Text>
                 <HStack>
-                  <CircularProgress value={Math.ceil(readingStatus)} size={'20px'} />
+                  <CircularProgress value={Math.ceil(props.readingStatus)} size={'20px'} />
                 </HStack>
               </HStack>
             </>
-            <BookReview bookReview={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, ex!"} />
+            <PopoverForm bookReview={props.bookReview} />
           </VStack>
         </Stack>
       </Box>
@@ -169,34 +174,86 @@ export default function BookSample() {
 }
 
 
-const TextInput = React.forwardRef((props, ref) => {
+type TextInputProps = {
+  id: string,
+  label: string,
+  ref: React.LegacyRef<HTMLInputElement> | undefined,
+  children?: React.ReactNode;
+}
+
+const TextInput = forwardRef<TextInputProps | any, 'input'>((props, ref) => {
   return (
     <FormControl>
       <FormLabel htmlFor={props.id}>{props.label}</FormLabel>
-      <Input ref={ref} id={props.id} {...props} />
+      <Textarea  {...props} ref={ref} id={props.id} />
     </FormControl>
   )
 })
 
 
-const Form = ({ bookReviewRef, onCancel }) => {
+const Form = ({ bookReviewRef, bookReview, onCancel }: { bookReviewRef: any; bookReview: string; onCancel: any }) => {
+  const [initialReview, setReview] = React.useState(bookReview);
+
+  const updateReview = () => {
+    setReview(initialReview);
+  }
+
+  const handleReviewChange = (event: { target: any; }) => {
+    const target = event.target;
+    setReview(target.value);
+  }
   return (
     <Stack spacing={4}>
       <TextInput
-        label='First name'
-        id='first-name'
-        ref={firstFieldRef}
-        defaultValue='John'
+        label='Book Review'
+        id='book-review'
+        ref={bookReviewRef}
+        // defaultValue={bookReview}
+        value={initialReview}
+        onChange={handleReviewChange}
       />
-      <TextInput label='Last name' id='last-name' defaultValue='Smith' />
       <ButtonGroup d='flex' justifyContent='flex-end'>
         <Button variant='outline' onClick={onCancel}>
           Cancel
         </Button>
-        <Button isDisabled colorScheme='teal'>
+        <Button colorScheme='teal' onClick={updateReview}>
           Save
         </Button>
       </ButtonGroup>
     </Stack>
   )
 }
+
+
+const PopoverForm = ({ bookReview }: { bookReview: string }) => {
+  const { onOpen, onClose, isOpen } = useDisclosure()
+  const bookReviewRef = React.useRef(null)
+
+  return (
+    <>
+      <Box d='inline-block' mr={3}>
+        {bookReview}
+      </Box>
+      <Popover
+        isOpen={isOpen}
+        initialFocusRef={bookReviewRef}
+        onOpen={onOpen}
+        onClose={onClose}
+        placement='right'
+        closeOnBlur={false}
+      >
+        <PopoverTrigger>
+          <IconButton size='sm' icon={<EditIcon />} aria-label={''} />
+        </PopoverTrigger>
+        <PopoverContent p={5}>
+          <FocusLock returnFocus persistentFocus={false}>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <Form bookReviewRef={bookReviewRef} onCancel={onClose} bookReview={bookReview} />
+          </FocusLock>
+        </PopoverContent>
+      </Popover>
+    </>
+  )
+}
+

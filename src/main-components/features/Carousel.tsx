@@ -7,14 +7,12 @@ import {
   Heading,
   Text,
   Container,
-  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Slider from 'react-slick';
 import { createApi } from 'unsplash-js';
 
-// const URL: string = 'https://source.unsplash.com/random';
 
 const api = createApi({
   accessKey: "ydQzHFVBUsrPJEG7fZohNC7_NIN2pwYS_ql6RnsRd7c"
@@ -88,7 +86,7 @@ export default function CaptionCarousel() {
       borderRadius="md"
       bgGradient="linear(to-t,black,white)"
       position={'relative'}
-      height={['70vh', '450px', '450px']}
+      height={['68vh', '440px', '440px']}
       width={['100vw', '60vw', '60vw']}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}
