@@ -28,7 +28,7 @@ import {
     IconButton,
     Input
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { EditIcon } from '@chakra-ui/icons';
 import FocusLock from 'react-focus-lock';
 import { forwardRef } from '@chakra-ui/react';
@@ -62,7 +62,7 @@ export default function BookSample(props: BookTemplate) {
                 rounded={'lg'}
                 mt={0}
                 pos={'relative'}
-                height={[240, 240, 240]}
+                // height={[240, 240, 240]}
                 _after={{
                     transition: 'all .3s ease',
                     content: '""',
@@ -182,31 +182,22 @@ const TextInput = forwardRef<TextInputProps | any, 'input'>((props, ref) => {
 })
 
 
-const Form = ({ bookReviewRef, bookReview, onCancel }: { bookReviewRef: any; bookReview: string; onCancel: any }) => {
-    const [initialReview, setReview] = React.useState(bookReview);
+const Form = ({ bookReviewRef, bookReview, onCancel, value, onChange, onSave }: { bookReviewRef: any; bookReview: string; onCancel: any, value: any, onChange: any, onSave: any }) => {
 
-    const updateReview = () => {
-        setReview(bookReviewRef);
-    }
-
-    const handleReviewChange = (event: { target: any; }) => {
-        const target = event.target;
-        setReview(target.value);
-    }
     return (
         <Stack spacing={4}>
             <TextInput
                 label='Book Description'
                 id='book-desciption'
                 ref={bookReviewRef}
-                value={initialReview}
-                onChange={handleReviewChange}
+                value={bookReview && value}
+                onChange={onChange}
             />
             <ButtonGroup display='flex' justifyContent='flex-end'>
                 <Button variant='outline' onClick={onCancel}>
                     Cancel
                 </Button>
-                <Button colorScheme='teal' onClick={updateReview}>
+                <Button colorScheme='teal' onClick={onSave}>
                     Save
                 </Button>
             </ButtonGroup>
@@ -217,7 +208,18 @@ const Form = ({ bookReviewRef, bookReview, onCancel }: { bookReviewRef: any; boo
 
 const PopoverForm = ({ bookReview }: { bookReview: string }) => {
     const { onOpen, onClose, isOpen } = useDisclosure()
-    const bookReviewRef = React.useRef(null)
+    const bookReviewRef = useRef(null)
+
+    const [review, setReview] = useState(bookReview);
+
+    const updateHandler = (event: any) => {
+        setReview(event.target.value);
+    }
+
+    const saveHandler = (event: any) => {
+        setReview(review);
+        onClose();
+    }
 
     return (
         <>
@@ -239,7 +241,13 @@ const PopoverForm = ({ bookReview }: { bookReview: string }) => {
                     <FocusLock returnFocus persistentFocus={false}>
                         <PopoverArrow />
                         <PopoverCloseButton />
-                        <Form bookReviewRef={bookReviewRef} onCancel={onClose} bookReview={bookReview} />
+                        <Form
+                            bookReviewRef={bookReviewRef}
+                            value={review}
+                            onChange={updateHandler}
+                            onCancel={onClose}
+                            bookReview={bookReview}
+                            onSave={saveHandler} />
                     </FocusLock>
                 </PopoverContent>
             </Popover>

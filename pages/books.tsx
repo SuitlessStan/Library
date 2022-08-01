@@ -17,8 +17,6 @@ const initialBookValues = {
   bookAuthor: "Some book Author",
   currentPage: 1,
   bookPages: 100,
-  readingStatus: (param1: number, param2: number) =>
-    param1 < param2 ? false : true,
   bookDescription: "Some book description",
   bookGenre: "Some book genre",
 };
@@ -28,7 +26,6 @@ export type Book = {
   bookAuthor: string;
   currentPage: number;
   bookPages: number;
-  readingStatus?: (param1: number, param2: number) => boolean,
   bookDescription: string;
   bookGenre: string;
 }
@@ -219,7 +216,7 @@ export default function BookLibrary() {
         <SimpleGrid columns={{ sm: 2, md: 2, lg: 4 }}>
           {books.map((book: any, index: number) => {
             return <>
-              <BookSample key={index} readingStatus={book.currentPages / book.bookPages} bookCover="https://static-cse.canva.com/blob/142533/Red-and-Beige-Cute-Illustration-Young-Adult-Book-Cover.jpg" bookTitle={book.bookTitle} bookAuthor={book.bookAuthor} bookGenre={book.bookGenre} bookDescription={book.bookDescription} />
+              <BookSample key={index} readingStatus={book.currentPages / book.bookPages} bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg" bookTitle={book.bookTitle} bookAuthor={book.bookAuthor} bookGenre={book.bookGenre} bookDescription={book.bookDescription} />
             </>
           })}
         </SimpleGrid>
