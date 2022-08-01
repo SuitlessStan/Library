@@ -70,7 +70,6 @@ export default function BookModal(props: any) {
                 setBooks((prev: any) => [...prev, values])
             }
 
-            console.log(books)
             props.onClose;
             toast({
                 title: "Addition successful",

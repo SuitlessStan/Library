@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { AddIcon, MoonIcon, SunIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import greetingMesage from "../utils/greeting-message";
+import { Show, Hide } from '@chakra-ui/react'
 
 type NavProps = {
   onOpen: () => void;
@@ -48,9 +49,11 @@ const Nav = (props: NavProps) => {
             variant="solid"
             colorScheme='teal'
           >
-            <Button onClick={props.onOpen}>
-              Add a new book
-            </Button>
+            <Hide below='md'>
+              <Button onClick={props.onOpen}>
+                Add a new book
+              </Button>
+            </Hide>
             <IconButton
               onClick={props.onOpen}
               aria-label="Add a new book"
