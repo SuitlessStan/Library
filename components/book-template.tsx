@@ -155,6 +155,9 @@ export default function BookSample(props: BookTemplate) {
                         </Text>
                         <HStack>
                             <CircularProgress value={Math.ceil(props.readingStatus)} size={'20px'} />
+                            <Text>
+                                {Math.ceil(props.readingStatus)} %
+                            </Text>
                         </HStack>
                     </HStack>
                     <PopoverForm bookReview={props.bookDescription} />

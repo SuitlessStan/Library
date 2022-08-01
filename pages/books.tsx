@@ -215,8 +215,10 @@ export default function BookLibrary() {
       <Box p={10}>
         <SimpleGrid columns={{ sm: 2, md: 2, lg: 4 }}>
           {books.map((book: any, index: number) => {
+            const { currentPage, bookPages } = book;
+            console.log(currentPage, bookPages);
             return <>
-              <BookSample key={index} readingStatus={book.currentPages / book.bookPages} bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg" bookTitle={book.bookTitle} bookAuthor={book.bookAuthor} bookGenre={book.bookGenre} bookDescription={book.bookDescription} />
+              <BookSample key={index} readingStatus={currentPage / bookPages} bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg" bookTitle={book.bookTitle} bookAuthor={book.bookAuthor} bookGenre={book.bookGenre} bookDescription={book.bookDescription} />
             </>
           })}
         </SimpleGrid>
