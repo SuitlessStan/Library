@@ -4,7 +4,10 @@ import {
     Stack,
     VStack,
     HStack,
-    useDisclosure,
+    ButtonGroup,
+    Flex,
+    Input,
+    useEditableControls,
     Textarea,
 } from '@chakra-ui/react';
 import {
@@ -15,23 +18,17 @@ import {
     CircularProgress,
     Tooltip,
 } from '@chakra-ui/react';
-import {
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    PopoverArrow,
-    PopoverCloseButton,
-    ButtonGroup,
-    Button,
-    FormControl,
-    FormLabel,
-    IconButton,
-    Input
-} from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react';
-import { EditIcon } from '@chakra-ui/icons';
-import FocusLock from 'react-focus-lock';
-import { forwardRef } from '@chakra-ui/react';
+import {
+    Editable,
+    EditableInput,
+    EditableTextarea,
+    EditablePreview,
+} from '@chakra-ui/react'
+import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
+import BookReview from './BookTemplate/book-review';
+import ReadingStatus from './BookTemplate/reading-status';
 
 
 
@@ -62,7 +59,7 @@ export default function BookSample(props: BookTemplate) {
                 rounded={'lg'}
                 mt={0}
                 pos={'relative'}
-                // height={[240, 240, 240]}
+                height={['50vh', '50vh', '50vh']}
                 _after={{
                     transition: 'all .3s ease',
                     content: '""',
@@ -153,14 +150,9 @@ export default function BookSample(props: BookTemplate) {
                                 <Badge colorScheme={'purple'}>Reading Progress</Badge>
                             </Tooltip>
                         </Text>
-                        <HStack>
-                            <CircularProgress value={Math.ceil(props.readingStatus)} size={'20px'} />
-                            <Text>
-                                {Math.ceil(props.readingStatus)} %
-                            </Text>
-                        </HStack>
+                        <ReadingStatus readingStatus={props.readingStatus} />
                     </HStack>
-                    <PopoverForm bookReview={props.bookDescription} />
+                    <BookReview bookReview={props.bookDescription} />
                 </VStack>
             </Stack>
         </Box>
@@ -168,92 +160,3 @@ export default function BookSample(props: BookTemplate) {
 }
 
 
-type TextInputProps = {
-    id: string,
-    label: string,
-    ref: React.LegacyRef<HTMLInputElement> | undefined,
-    children?: React.ReactNode;
-}
-
-const TextInput = forwardRef<TextInputProps | any, 'input'>((props, ref) => {
-    return (
-        <FormControl>
-            <FormLabel htmlFor={props.id}>{props.label}</FormLabel>
-            <Textarea  {...props} ref={ref} id={props.id} />
-        </FormControl>
-    )
-})
-
-
-const Form = ({ bookReviewRef, bookReview, onCancel, value, onChange, onSave }: { bookReviewRef: any; bookReview: string; onCancel: any, value: any, onChange: any, onSave: any }) => {
-
-    return (
-        <Stack spacing={4}>
-            <TextInput
-                label='Book Description'
-                id='book-desciption'
-                ref={bookReviewRef}
-                value={bookReview && value}
-                onChange={onChange}
-            />
-            <ButtonGroup display='flex' justifyContent='flex-end'>
-                <Button variant='outline' onClick={onCancel}>
-                    Cancel
-                </Button>
-                <Button colorScheme='teal' onClick={onSave}>
-                    Save
-                </Button>
-            </ButtonGroup>
-        </Stack>
-    )
-}
-
-
-const PopoverForm = ({ bookReview }: { bookReview: string }) => {
-    const { onOpen, onClose, isOpen } = useDisclosure()
-    const bookReviewRef = useRef(null)
-
-    const [review, setReview] = useState(bookReview);
-
-    const updateHandler = (event: any) => {
-        setReview(event.target.value);
-    }
-
-    const saveHandler = (event: any) => {
-        setReview(review);
-        onClose();
-    }
-
-    return (
-        <>
-            <Box display='inline-block' mr={3}>
-                {bookReview}
-            </Box>
-            <Popover
-                isOpen={isOpen}
-                initialFocusRef={bookReviewRef}
-                onOpen={onOpen}
-                onClose={onClose}
-                placement='right'
-                closeOnBlur={false}
-            >
-                <PopoverTrigger>
-                    <IconButton size='sm' icon={<EditIcon />} aria-label={''} />
-                </PopoverTrigger>
-                <PopoverContent p={5}>
-                    <FocusLock returnFocus persistentFocus={false}>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <Form
-                            bookReviewRef={bookReviewRef}
-                            value={review}
-                            onChange={updateHandler}
-                            onCancel={onClose}
-                            bookReview={bookReview}
-                            onSave={saveHandler} />
-                    </FocusLock>
-                </PopoverContent>
-            </Popover>
-        </>
-    )
-}
