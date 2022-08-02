@@ -30,31 +30,29 @@ type ModalInput = {
 const ModalInput = (props: ModalInput) => {
   if (props.inputType === "textarea") {
     return (
-      <>
-        <Box width={"100%"}>
-          <FormControl
-            variant="floating"
-            id={props.formControlID}
-            isInvalid={props.Validator}
-          >
-            <FormLabel htmlFor={props.inputID}>{props.formLabel}</FormLabel>
-            <Textarea
-              name={props.inputName}
-              id={props.inputID}
-              value={props.formikSubjectValue}
-              onChange={props.onChange}
-              onBlur={props.onBlur}
-              size="md"
-              resize={"none"}
-              placeholder={props.placeholder}
-            />
-            <FormHelperText>{props.formHelperText}</FormHelperText>
-            {props.formikSubjectError && props.formikSubjectTouched && (
-              <FormErrorMessage>{props.formikSubjectError}</FormErrorMessage>
-            )}
-          </FormControl>
-        </Box>
-      </>
+      <Box width={"100%"}>
+        <FormControl
+          variant="floating"
+          id={props.formControlID}
+          isInvalid={props.Validator}
+        >
+          <FormLabel htmlFor={props.inputID}>{props.formLabel}</FormLabel>
+          <Textarea
+            name={props.inputName}
+            id={props.inputID}
+            value={props.formikSubjectValue}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
+            size="md"
+            resize={"none"}
+            placeholder={props.placeholder}
+          />
+          <FormHelperText>{props.formHelperText}</FormHelperText>
+          {props.formikSubjectError && props.formikSubjectTouched && (
+            <FormErrorMessage>{props.formikSubjectError}</FormErrorMessage>
+          )}
+        </FormControl>
+      </Box>
     );
   }
   else if (props.inputType === "select") {
@@ -120,29 +118,27 @@ const ModalInput = (props: ModalInput) => {
     )
   }
   return (
-    <>
-      <Box width={"100%"}>
-        <FormControl
-          variant="floating"
-          id={props.formControlID}
-          isInvalid={props.Validator}
-        >
-          <FormLabel htmlFor={props.inputID}>{props.formLabel}</FormLabel>
-          <Input
-            id={props.inputID}
-            type="text"
-            value={props.formikSubjectValue}
-            onChange={props.onChange}
-            onBlur={props.onBlur}
-            placeholder={props.placeholder}
-          />
-          <FormHelperText>{props.formHelperText}</FormHelperText>
-          {props.formikSubjectError && props.formikSubjectTouched && (
-            <FormErrorMessage>{props.formikSubjectError}</FormErrorMessage>
-          )}
-        </FormControl>
-      </Box>
-    </>
+    <Box width={"100%"}>
+      <FormControl
+        variant="floating"
+        id={props.formControlID}
+        isInvalid={props.Validator}
+      >
+        <FormLabel htmlFor={props.inputID}>{props.formLabel}</FormLabel>
+        <Input
+          id={props.inputID}
+          type="text"
+          value={props.formikSubjectValue}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+          placeholder={props.placeholder}
+        />
+        <FormHelperText>{props.formHelperText}</FormHelperText>
+        {props.formikSubjectError && props.formikSubjectTouched && (
+          <FormErrorMessage>{props.formikSubjectError}</FormErrorMessage>
+        )}
+      </FormControl>
+    </Box>
   );
 
 };

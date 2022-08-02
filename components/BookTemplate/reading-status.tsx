@@ -1,7 +1,7 @@
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 import { HStack, CircularProgress, Text, ButtonGroup, Editable, EditableInput, EditablePreview, Flex, IconButton, Textarea, useEditableControls, Input, EditableTextarea } from "@chakra-ui/react";
 import { useState } from "react";
-import bookReview from "./book-review";
+import bookReview from "./review";
 
 export default function ReadingStatus({ readingStatus }: { readingStatus: number }) {
     const [editClick, isEditClicked] = useState(false);

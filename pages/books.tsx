@@ -7,18 +7,21 @@ import containsObject from "../utils/object-in-list";
 import { useState } from "react";
 import ModalInput from "../components/modal-input";
 import { SimpleGrid } from '@chakra-ui/react'
-import BookSample from "../components/book-template";
+import BookTemplate from "../components/book-template";
+import FadeIn from "react-fade-in";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 
 
 
 const initialBookValues = {
-  bookTitle: "Some Book Title",
-  bookAuthor: "Some book Author",
+  bookTitle: "",
+  bookAuthor: "",
   currentPage: 1,
   bookPages: 100,
-  bookDescription: "Some book description",
-  bookGenre: "Some book genre",
+  bookReview: "",
+  bookGenre: "",
 };
 
 export type Book = {
@@ -26,16 +29,17 @@ export type Book = {
   bookAuthor: string;
   currentPage: number;
   bookPages: number;
-  bookDescription: string;
+  bookReview: string;
   bookGenre: string;
 }
 
-
+const defaultBooks: Book[] = [];
 
 export default function BookLibrary() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [books, setBooks] = useState<any>([]);
+  const [books, setBooks] = useState(defaultBooks);
+  const [bookLength, setBookLength] = useState(0);
 
   const toast = useToast();
 
@@ -59,23 +63,33 @@ export default function BookLibrary() {
         .integer("Must be more than 0")
         .lessThan(1200),
       bookGenre: Yup.string().required("Required"),
-      bookDescription: Yup.string().required(
+      bookReview: Yup.string().required(
         "A book review is required on submission"
       ),
     }),
     onSubmit: (values) => {
       if (!containsObject(values, books)) {
-        setBooks((prev: any) => [...prev, values])
+        setBooks((prev: Book[]) => [...prev, values])
+        onClose();
+        toast({
+          title: "Addition successful",
+          description: "A new book was added!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      else {
+        toast({
+          title: "Book already exists",
+          description: "This book already exists in the library",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
       }
 
-      onClose();
-      toast({
-        title: "Addition successful",
-        description: "A new book was added!",
-        status: "success",
-        duration: 4500,
-        isClosable: true,
-      });
+
     },
   });
 
@@ -171,14 +185,14 @@ export default function BookLibrary() {
                   </FormControl>
                 </Box>
                 <ModalInput
-                  formControlID="bookDescription"
-                  Validator={validator(formik.touched.bookDescription, formik.errors.bookDescription)}
-                  inputID="bookDescription"
-                  inputName="bookDescription"
-                  formLabel="Book Description"
-                  formikSubjectValue={formik.values.bookDescription}
-                  formikSubjectError={formik.errors.bookDescription}
-                  formikSubjectTouched={formik.touched.bookDescription}
+                  formControlID="bookReview"
+                  Validator={validator(formik.touched.bookReview, formik.errors.bookReview)}
+                  inputID="bookReview"
+                  inputName="bookReview"
+                  formLabel="Book Review"
+                  formikSubjectValue={formik.values.bookReview}
+                  formikSubjectError={formik.errors.bookReview}
+                  formikSubjectTouched={formik.touched.bookReview}
                   inputType="textarea"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -212,27 +226,50 @@ export default function BookLibrary() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Box p={10}>
+      <Box p={5}>
         <SimpleGrid columns={{ sm: 2, md: 2, lg: 4 }}>
-          {books.map((book: any, index: number) => {
-            const { currentPage, bookPages } = book;
-            console.log(currentPage / bookPages * 100);
-            return <>
-              <BookSample key={index}
-                readingStatus={currentPage / bookPages * 100}
-                bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg"
-                bookTitle={book.bookTitle}
-                bookAuthor={book.bookAuthor}
-                bookGenre={book.bookGenre}
-                bookDescription={book.bookDescription} />
-            </>
-          })}
+          {
+            books.map((book: Book, index: number) => {
+              const { currentPage, bookPages } = book
+              return (
+                <>
+                  <FadeIn>
+                    <BookTemplate key={index}
+                      readingStatus={currentPage / bookPages * 100}
+                      bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg"
+                      bookTitle={book.bookTitle}
+                      bookAuthor={book.bookAuthor}
+                      bookGenre={book.bookGenre}
+                      bookReview={book.bookReview} />
+                  </FadeIn>
+                </>
+              )
+            })
+          }
         </SimpleGrid>
       </Box>
     </>
   );
 }
 
+
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+    slidesToSlide: 3 // optional, default to 1.
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 2 // optional, default to 1.
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    slidesToSlide: 1 // optional, default to 1.
+  }
+};
 
 
 const modalBodyStyles = {

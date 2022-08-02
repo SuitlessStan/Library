@@ -4,31 +4,19 @@ import {
     Stack,
     VStack,
     HStack,
-    ButtonGroup,
-    Flex,
-    Input,
-    useEditableControls,
-    Textarea,
 } from '@chakra-ui/react';
 import {
-    Image,
     Text,
     Badge,
-    Code,
-    CircularProgress,
     Tooltip,
 } from '@chakra-ui/react';
-import { IconButton } from '@chakra-ui/react'
-import React, { useRef, useState } from 'react';
-import {
-    Editable,
-    EditableInput,
-    EditableTextarea,
-    EditablePreview,
-} from '@chakra-ui/react'
-import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
-import BookReview from './BookTemplate/book-review';
+import React from 'react';
+import BookReview from './BookTemplate/review';
 import ReadingStatus from './BookTemplate/reading-status';
+import BookGenre from './BookTemplate/genre';
+import BookTitle from './BookTemplate/title';
+import BookAuthor from './BookTemplate/author';
+import BookCover from './BookTemplate/cover';
 
 
 
@@ -37,11 +25,11 @@ interface BookTemplate {
     bookCover?: string;
     bookAuthor: string;
     bookGenre: string;
-    bookDescription: string;
+    bookReview: string;
     readingStatus: number;
 }
 
-export default function BookSample(props: BookTemplate) {
+export default function BookTemplate(props: BookTemplate) {
 
     return (
         <Box
@@ -55,88 +43,15 @@ export default function BookSample(props: BookTemplate) {
             zIndex={0}
         >
             {/* Book Cover */}
-            <Box
-                rounded={'lg'}
-                mt={0}
-                pos={'relative'}
-                height={['50vh', '50vh', '50vh']}
-                _after={{
-                    transition: 'all .3s ease',
-                    content: '""',
-                    w: 'full',
-                    h: 'full',
-                    pos: 'absolute',
-                    top: 5,
-                    left: 0,
-                    backgroundImage: `url(${props.bookCover})`,
-                    filter: 'blur(15px)',
-                    zIndex: -1,
-                }}
-                _groupHover={{
-                    _after: {
-                        filter: 'blur(30px)',
-                    },
-                }}
-            >
-                <Image
-                    alt={props.bookTitle}
-                    rounded={'md'}
-                    height="full"
-                    width="full"
-                    src={`${props.bookCover}`}
-                    justifyContent="center"
-                />
-            </Box>
+            <BookCover
+                bookTitle={props.bookTitle}
+                bookCover={props.bookCover} />
             <Stack pt={10} spacing={[5, 13, 15]} align={'center'}>
                 {/* Book Genre */}
-                <HStack spacing={'20'}>
-                    <Text color={'gray.500'} fontSize={[12, 13, 14]} fontWeight={'bold'}>
-                        Genre
-                    </Text>
-                    <Badge bg="orange.400">
-                        <Text textTransform={'uppercase'}>
-                            <Tooltip
-                                hasArrow
-                                label="Book Genre"
-                                bg="red.500"
-                                color="white"
-                                aria-label="A tooltip"
-                            >
-                                {props.bookGenre}
-                            </Tooltip>
-                        </Text>
-                    </Badge>
-                </HStack>
+                <BookGenre bookGenre={props.bookGenre} />
                 {/* Book Title */}
-                <Text
-                    fontSize={['sm', 'md', 'lg']}
-                    fontFamily={'roboto'}
-                    fontWeight={550}
-                    fontStyle="italic"
-                    textAlign={'center'}
-                >
-                    <Tooltip
-                        hasArrow
-                        label="Book Title"
-                        bg="red.500"
-                        color="white"
-                        aria-label="A tooltip"
-                    >
-                        {props.bookTitle}
-                    </Tooltip>
-                </Text>
-                <Code>
-                    <Text fontSize={'sm'}>
-                        <Tooltip
-                            label="Book Author"
-                            bg="red.500"
-                            color="white"
-                            aria-label="A tooltip"
-                        >
-                            {props.bookAuthor}
-                        </Tooltip>
-                    </Text>
-                </Code>
+                <BookTitle bookTitle={props.bookTitle} />
+                <BookAuthor bookAuthor={props.bookAuthor} />
                 <VStack align="center">
                     <HStack spacing={5}>
                         <Text fontSize={[12, 13, 14]}>
@@ -152,7 +67,7 @@ export default function BookSample(props: BookTemplate) {
                         </Text>
                         <ReadingStatus readingStatus={props.readingStatus} />
                     </HStack>
-                    <BookReview bookReview={props.bookDescription} />
+                    <BookReview bookReview={props.bookReview} />
                 </VStack>
             </Stack>
         </Box>
