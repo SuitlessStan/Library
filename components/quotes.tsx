@@ -66,11 +66,11 @@ const RandomQuote = ({
   quoteAuthor,
 }: RandomQuoteProps) => {
   return (
-    <VStack>
+    <VStack mt={4}>
       <FadeIn>
         <Container key={quoteID} maxWidth={680} maxHeight={200}>
           <Text
-            fontSize="md"
+            fontSize="lg"
             fontFamily={"Roboto"}
             color="dark"
             fontWeight="bold"

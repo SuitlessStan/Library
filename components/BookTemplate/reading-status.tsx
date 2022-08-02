@@ -9,11 +9,14 @@ export default function ReadingStatus({ readingStatus }: { readingStatus: number
         <>
 
             {
-                !editClick ? <HStack><CircularProgress value={Math.ceil(readingStatus)} size={'20px'} /><Text>
-                    {Math.ceil(readingStatus)} %
-                </Text></HStack> : <Editable defaultValue={readingStatus.toString()}>
+                !editClick ? <HStack>
+                    <CircularProgress value={Math.ceil(readingStatus)} size={'20px'} />
+                    <Text>
+                        {Math.ceil(readingStatus)} %
+                    </Text>
+                </HStack> : <Editable defaultValue={readingStatus.toString()}>
                     <EditablePreview />
-                    <EditableTextarea />
+                    <EditableInput />
                 </Editable>
             }
         </>

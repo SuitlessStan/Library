@@ -23,6 +23,7 @@ type ModalInput = {
   formikSubjectTouched: boolean | undefined;
   inputName?: string;
   inputType?: string;
+  placeholder?: string;
 };
 
 
@@ -45,6 +46,7 @@ const ModalInput = (props: ModalInput) => {
               onBlur={props.onBlur}
               size="md"
               resize={"none"}
+              placeholder={props.placeholder}
             />
             <FormHelperText>{props.formHelperText}</FormHelperText>
             {props.formikSubjectError && props.formikSubjectTouched && (
@@ -132,6 +134,7 @@ const ModalInput = (props: ModalInput) => {
             value={props.formikSubjectValue}
             onChange={props.onChange}
             onBlur={props.onBlur}
+            placeholder={props.placeholder}
           />
           <FormHelperText>{props.formHelperText}</FormHelperText>
           {props.formikSubjectError && props.formikSubjectTouched && (
