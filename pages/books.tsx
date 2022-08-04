@@ -1,5 +1,5 @@
 import Nav from "../components/books-nav";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, Badge, ModalCloseButton, ModalBody, VStack, FormControl, HStack, Input, FormHelperText, ModalFooter, ButtonGroup, Button, useDisclosure, useToast, Box } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, Badge, ModalCloseButton, ModalBody, VStack, FormControl, HStack, Input, FormHelperText, ModalFooter, ButtonGroup, Button, useDisclosure, useToast, Box, FormErrorMessage } from "@chakra-ui/react";
 import validator from "../utils/validator";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -39,7 +39,6 @@ export default function BookLibrary() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [books, setBooks] = useState(defaultBooks);
-  const [bookLength, setBookLength] = useState(0);
 
   const toast = useToast();
 
@@ -52,17 +51,17 @@ export default function BookLibrary() {
       bookAuthor: Yup.string()
         .max(50, "Must be 20 characters or less")
         .required(
-          "Book author cannot be empty and must be longer than 15 characters"
+          "Book author cannot be empty"
         ),
       currentPage: Yup.number()
         .positive("this number must be more than 1")
         .integer("Must be more than 0")
-        .moreThan(1),
+        .moreThan(1).required('current page must be more than 1'),
       bookPages: Yup.number()
         .positive("this number must be more than 1200")
         .integer("Must be more than 0")
-        .lessThan(1200),
-      bookGenre: Yup.string().required("Required"),
+        .lessThan(1200).required('book pages must be less than 1200'),
+      bookGenre: Yup.string().required("Book genre cannot be empty"),
       bookReview: Yup.string().required(
         "A book review is required on submission"
       ),
@@ -70,7 +69,8 @@ export default function BookLibrary() {
     onSubmit: (values) => {
       if (!containsObject(values, books)) {
         setBooks((prev: Book[]) => [...prev, values])
-        onClose();
+        formik.handleReset
+        onClose()
         toast({
           title: "Addition successful",
           description: "A new book was added!",
@@ -79,10 +79,19 @@ export default function BookLibrary() {
           isClosable: true,
         });
       }
-      else {
+      else if (containsObject(values, books)) {
         toast({
           title: "Book already exists",
           description: "This book already exists in the library",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+      else if (formik.errors) {
+        toast({
+          title: "Error",
+          description: formik.errors.toString(),
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -181,7 +190,17 @@ export default function BookLibrary() {
                         onBlur={formik.handleBlur}
                       />
                     </HStack>
-                    <FormHelperText>{"Fill in information about the book you're reading"}</FormHelperText>
+                    <FormHelperText>{`Fill in information about the book you're currently reading`}</FormHelperText>
+                    {(formik.errors.currentPage && formik.touched.currentPage) && ((
+                      <FormErrorMessage>{
+                        formik.errors.currentPage
+                      }</FormErrorMessage>
+                    ))}
+                    {(formik.errors.bookPages && formik.touched.bookPages) && ((
+                      <FormErrorMessage>{
+                        formik.errors.bookPages
+                      }</FormErrorMessage>
+                    ))}
                   </FormControl>
                 </Box>
                 <ModalInput
@@ -207,7 +226,9 @@ export default function BookLibrary() {
                 type="submit"
                 colorScheme='teal'
                 // to fix later
-                onClick={(e: any) => formik.handleSubmit(e)}
+                onClick={(e: any) => {
+                  formik.handleSubmit(e);
+                }}
               >
                 Add Book
               </Button>
@@ -227,26 +248,62 @@ export default function BookLibrary() {
         </ModalContent>
       </Modal>
       <Box p={5}>
-        <SimpleGrid columns={{ sm: 2, md: 2, lg: 4 }}>
+        {/* This is so shitty */}
+        {books.length > 4 ? <Box><Carousel
+          swipeable={true}
+          draggable={false}
+          showDots={true}
+          responsive={responsive}
+          ssr={true} // means to render carousel on server-side.
+          infinite={false}
+          autoPlaySpeed={1000}
+          keyBoardControl={true}
+          customTransition="all .5"
+          transitionDuration={1500}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-padding-40-px"
+        >
           {
             books.map((book: Book, index: number) => {
               const { currentPage, bookPages } = book
               return (
                 <>
                   <FadeIn>
-                    <BookTemplate key={index}
+                    <BookTemplate
+                      key={index}
                       readingStatus={currentPage / bookPages * 100}
                       bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg"
                       bookTitle={book.bookTitle}
                       bookAuthor={book.bookAuthor}
                       bookGenre={book.bookGenre}
-                      bookReview={book.bookReview} />
+                      bookReview={book.bookReview}
+                    />
                   </FadeIn>
                 </>
               )
             })
           }
-        </SimpleGrid>
+        </Carousel></Box> : books.map((book: Book, index: number) => {
+          const { currentPage, bookPages } = book
+          return (
+            <>
+              <FadeIn>
+                <BookTemplate
+                  key={index}
+                  readingStatus={currentPage / bookPages * 100}
+                  bookCover="https://www.goodillustration.com/blog/wp-content/uploads/2021/08/640-4.jpg"
+                  bookTitle={book.bookTitle}
+                  bookAuthor={book.bookAuthor}
+                  bookGenre={book.bookGenre}
+                  bookReview={book.bookReview}
+                />
+              </FadeIn>
+            </>
+          )
+        })
+        }
       </Box>
     </>
   );
@@ -256,7 +313,7 @@ export default function BookLibrary() {
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
+    items: 4,
     slidesToSlide: 3 // optional, default to 1.
   },
   tablet: {

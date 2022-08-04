@@ -80,7 +80,7 @@ export default function CaptionCarousel() {
       borderRadius="md"
       bgGradient="linear(to-t,black,white)"
       position={"relative"}
-      height={["68vh", "440px", "440px"]}
+      height={["68vh", "68vh", "68vh"]}
       width={["100vw", "60vw", "60vw"]}
       overflow={"hidden"}
     >

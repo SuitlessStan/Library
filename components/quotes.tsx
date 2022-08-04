@@ -41,7 +41,7 @@ const RandomQuotes = () => {
 
   return (
     <>
-      {!quote && <CircularProgress isIndeterminate size={8} />}
+      {!quote && <CircularProgress m={2} isIndeterminate size={7} />}
       {quote && (
         <RandomQuote
           quoteID={quote.id}
@@ -71,9 +71,8 @@ const RandomQuote = ({
         <Container key={quoteID} maxWidth={680} maxHeight={200}>
           <Text
             fontSize="lg"
-            fontFamily={"Roboto"}
+            fontFamily={"Times New Roman"}
             color="dark"
-            fontWeight="bold"
             fontStyle="italic"
             textAlign={"center"}
           >
